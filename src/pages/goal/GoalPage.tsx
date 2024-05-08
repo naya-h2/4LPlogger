@@ -89,8 +89,12 @@ const InputContainer = styled.div`
 const disabledButton = css`
   background-color: #d9d9d9;
   cursor: not-allowed;
+
+  &:hover {
+    background-color: #d9d9d9;
+  }
 `;
 
 const BottomButton = styled.button<{ $disabled: boolean }>`
-  background-color: ${({ $disabled }) => ($disabled ? "#D9D9D9" : null)};
+  ${({ $disabled }) => ($disabled ? disabledButton : null)};
 `;
