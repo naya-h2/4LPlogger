@@ -1,3 +1,4 @@
+import MobileLayout from "pages/MobileLayout";
 import NotFoundPage from "pages/NotFoundPage";
 import CalendarPage from "pages/calendar/CalendarPage";
 import GoalPage from "pages/goal/GoalPage";
@@ -12,18 +13,20 @@ import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/setting" element={<SettingPage />} />
-      <Route path="/ranking" element={<RankingPage />} />
-      <Route path="/goal" element={<GoalPage />} />
-      <Route path="/plogging" element={<PloggingPage />} />
-      <Route path="/post" element={<PostPage />} />
-      <Route path="/calendar" element={<CalendarPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <MobileLayout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/setting" element={<SettingPage />} />
+        <Route path="/ranking" element={<RankingPage />} />
+        <Route path="/goal" element={<GoalPage />} />
+        <Route path="/plogging" element={<PloggingPage />} />
+        <Route path="/post" element={<PostPage />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </MobileLayout>
   );
 }
 
