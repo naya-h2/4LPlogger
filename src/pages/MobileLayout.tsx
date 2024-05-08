@@ -1,3 +1,5 @@
+import Header from "components/Header";
+import { IS_HEADER } from "constants/layout";
 import { ReactNode } from "react";
 import styled from "styled-components";
 
@@ -8,7 +10,10 @@ interface Props {
 function MobileLayout({ children }: Props) {
   return (
     <Background>
-      <Container>{children}</Container>
+      <Container>
+        {IS_HEADER.includes(window.location.pathname) && <Header />}
+        {children}
+      </Container>
     </Background>
   );
 }
@@ -23,6 +28,8 @@ const Container = styled.div`
 
   background-color: #f4ffe9;
   box-shadow: 0 5px 5px 5px rgba(64, 60, 67, 0.16);
+
+  position: relative;
 `;
 
 const Background = styled.div`
