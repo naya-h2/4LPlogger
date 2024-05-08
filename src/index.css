@@ -9,9 +9,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  border: none;
+  background: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
   font-family: "Pretendard-Regular";
   font-weight: 400;
+}
+
+button {
+  cursor: pointer;
 }
