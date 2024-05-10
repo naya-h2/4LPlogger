@@ -3,6 +3,8 @@ import addIcon from "assets/icon/add-img.svg";
 import { ChangeEvent, useState } from "react";
 import useModal from "hooks/useModal";
 import PloggingModal from "components/Modal/PloggingModal";
+import BottomBtnLayout from "pages/BottomBtnLayout";
+import ScoreBox from "components/ScoreBox";
 
 function PostPage() {
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
@@ -14,59 +16,27 @@ function PostPage() {
   };
 
   return (
-    <Container>
-      <ContentWrapper>
-        <Title>플로깅을 완료했어요✨</Title>
-        <CardContainer>
-          <Date>2024-05-08</Date>
-          쓰레기 사진을 찍어 플로깅을 인증하세요.
-          <ImgAddBox $imgUrl={imgUrl}>
-            {imgUrl === "" && <ImgAddIcon src={addIcon} />}
-            <input type="file" hidden accept="image/*" onChange={handleImgChange} />
-          </ImgAddBox>
-          <ResultWrapper>
-            <ResultBox>
-              <Category>시간</Category>
-              <Value>00:39:44</Value>
-            </ResultBox>
-            <ResultBox>
-              <Category>km</Category>
-              <Value>3.3345</Value>
-            </ResultBox>
-          </ResultWrapper>
-          <Button onClick={handleModalOpen}>인증하기</Button>
-          플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
-        </CardContainer>
-      </ContentWrapper>
-      <button>기록하기</button>
+    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기">
+      <CardContainer>
+        <Date>2024-05-08</Date>
+        쓰레기 사진을 찍어 플로깅을 인증하세요.
+        <ImgAddBox $imgUrl={imgUrl}>
+          {imgUrl === "" && <ImgAddIcon src={addIcon} />}
+          <input type="file" hidden accept="image/*" onChange={handleImgChange} />
+        </ImgAddBox>
+        <ResultWrapper>
+          <ScoreBox category="시간" value="00:30:59" />
+          <ScoreBox category="km" value="3.3345" />
+        </ResultWrapper>
+        <Button onClick={handleModalOpen}>인증하기</Button>
+        플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
+      </CardContainer>
       {isOpen && <PloggingModal hideModal={handleModalClose} />}
-    </Container>
+    </BottomBtnLayout>
   );
 }
 
 export default PostPage;
-
-const Container = styled.div`
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const Title = styled.div`
-  padding-top: 32px;
-
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-`;
 
 const CardContainer = styled.div`
   width: 100%;
@@ -96,27 +66,6 @@ const Button = styled.button`
 
 const ResultWrapper = styled.div`
   display: flex;
-`;
-
-const ResultBox = styled.div`
-  width: 50%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const Category = styled.div`
-  font-size: 14px;
-  text-align: center;
-`;
-
-const Value = styled.div`
-  color: #54a300;
-
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
 `;
 
 const ImgAddBox = styled.label<{ $imgUrl: string }>`

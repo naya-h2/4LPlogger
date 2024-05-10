@@ -2,7 +2,7 @@ import ModalFrame from "./ModalFrame";
 import styled from "styled-components";
 
 interface Props {
-  hideModal: any;
+  hideModal: () => void;
 }
 
 function PloggingModal({ hideModal }: Props) {
