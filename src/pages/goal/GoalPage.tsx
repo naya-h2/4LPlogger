@@ -7,29 +7,27 @@ function GoalPage() {
   const [selectedGoal, setSelectedGoal] = useState("");
 
   return (
-    <>
-      <Container>
-        <ContentWrapper>
-          <Title>목표를 설정하세요🔥</Title>
-          <ButtonContainer>
-            {DEFAULT_GOAL.map((goal) => (
-              <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
-                {goal}
-              </Button>
-            ))}
-          </ButtonContainer>
-          {selectedGoal === DEFAULT_GOAL[3] && (
-            <InputContainer>
-              <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
-              <input placeholder="1.234" />
-            </InputContainer>
-          )}
-        </ContentWrapper>
-        <BottomButton disabled={selectedGoal === ""} $disabled={selectedGoal === ""}>
-          뛰러가기
-        </BottomButton>
-      </Container>
-    </>
+    <Container>
+      <ContentWrapper>
+        <Title>목표를 설정하세요🔥</Title>
+        <ButtonContainer>
+          {DEFAULT_GOAL.map((goal) => (
+            <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
+              {goal}
+            </Button>
+          ))}
+        </ButtonContainer>
+        {selectedGoal === DEFAULT_GOAL[3] && (
+          <InputContainer>
+            <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
+            <input placeholder="1.234" />
+          </InputContainer>
+        )}
+      </ContentWrapper>
+      <BottomButton disabled={selectedGoal === ""} $disabled={selectedGoal === ""}>
+        뛰러가기
+      </BottomButton>
+    </Container>
   );
 }
 
