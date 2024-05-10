@@ -7,6 +7,7 @@ import LoginPage from "pages/login/LoginPage";
 import PloggingPage from "pages/plogging/PloggingPage";
 import PostPage from "pages/post/PostPage";
 import RankingPage from "pages/ranking/RankingPage";
+import ScorePage from "pages/score/ScorePage";
 import SettingPage from "pages/setting/SettingPage";
 import SignupPage from "pages/signup/SignupPage";
 import { Route, Routes } from "react-router-dom";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/plogging" element={<PloggingPage />} />
         <Route path="/post" element={<PostPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/score" element={<ScorePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </MobileLayout>

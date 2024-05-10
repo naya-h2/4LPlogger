@@ -3,6 +3,7 @@ import addIcon from "assets/icon/add-img.svg";
 import { ChangeEvent, useState } from "react";
 import useModal from "hooks/useModal";
 import PloggingModal from "components/Modal/PloggingModal";
+import BottomBtnLayout from "pages/BottomBtnLayout";
 
 function PostPage() {
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
@@ -14,33 +15,29 @@ function PostPage() {
   };
 
   return (
-    <Container>
-      <ContentWrapper>
-        <Title>플로깅을 완료했어요✨</Title>
-        <CardContainer>
-          <Date>2024-05-08</Date>
-          쓰레기 사진을 찍어 플로깅을 인증하세요.
-          <ImgAddBox $imgUrl={imgUrl}>
-            {imgUrl === "" && <ImgAddIcon src={addIcon} />}
-            <input type="file" hidden accept="image/*" onChange={handleImgChange} />
-          </ImgAddBox>
-          <ResultWrapper>
-            <ResultBox>
-              <Category>시간</Category>
-              <Value>00:39:44</Value>
-            </ResultBox>
-            <ResultBox>
-              <Category>km</Category>
-              <Value>3.3345</Value>
-            </ResultBox>
-          </ResultWrapper>
-          <Button onClick={handleModalOpen}>인증하기</Button>
-          플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
-        </CardContainer>
-      </ContentWrapper>
-      <button>기록하기</button>
+    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기">
+      <CardContainer>
+        <Date>2024-05-08</Date>
+        쓰레기 사진을 찍어 플로깅을 인증하세요.
+        <ImgAddBox $imgUrl={imgUrl}>
+          {imgUrl === "" && <ImgAddIcon src={addIcon} />}
+          <input type="file" hidden accept="image/*" onChange={handleImgChange} />
+        </ImgAddBox>
+        <ResultWrapper>
+          <ResultBox>
+            <Category>시간</Category>
+            <Value>00:39:44</Value>
+          </ResultBox>
+          <ResultBox>
+            <Category>km</Category>
+            <Value>3.3345</Value>
+          </ResultBox>
+        </ResultWrapper>
+        <Button onClick={handleModalOpen}>인증하기</Button>
+        플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
+      </CardContainer>
       {isOpen && <PloggingModal hideModal={handleModalClose} />}
-    </Container>
+    </BottomBtnLayout>
   );
 }
 

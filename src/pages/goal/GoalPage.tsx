@@ -1,5 +1,6 @@
+import BottomBtnLayout from "pages/BottomBtnLayout";
 import { useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const DEFAULT_GOAL = ["1km", "2km", "3km", "직접 입력"];
 
@@ -7,56 +8,29 @@ function GoalPage() {
   const [selectedGoal, setSelectedGoal] = useState("");
 
   return (
-    <Container>
-      <ContentWrapper>
-        <Title>목표를 설정하세요🔥</Title>
-        <ButtonContainer>
-          {DEFAULT_GOAL.map((goal) => (
-            <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
-              {goal}
-            </Button>
-          ))}
-        </ButtonContainer>
-        {selectedGoal === DEFAULT_GOAL[3] && (
-          <InputContainer>
-            <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
-            <input placeholder="1.234" />
-          </InputContainer>
-        )}
-      </ContentWrapper>
-      <BottomButton disabled={selectedGoal === ""} $disabled={selectedGoal === ""}>
-        뛰러가기
-      </BottomButton>
-    </Container>
+    <BottomBtnLayout titleText="목표를 설정하세요🔥" btnText="뛰러가기" disabled={selectedGoal === ""}>
+      <ButtonContainer>
+        {DEFAULT_GOAL.map((goal) => (
+          <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
+            {goal}
+          </Button>
+        ))}
+      </ButtonContainer>
+      {selectedGoal === DEFAULT_GOAL[3] && (
+        <InputContainer>
+          <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
+          <input placeholder="1.234" />
+        </InputContainer>
+      )}
+    </BottomBtnLayout>
   );
 }
 
 export default GoalPage;
 
-const Container = styled.div`
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-`;
-const Title = styled.div`
-  padding-top: 32px;
-
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-`;
-
 const Button = styled.button<{ $selected: boolean }>`
   width: 20%;
-  padding: 12px 8px;
+  padding: 12px 0px;
 
   font-size: 14px;
   font-weight: 400;
@@ -82,17 +56,4 @@ const InputContainer = styled.div`
   gap: 8px;
 
   font-size: 14px;
-`;
-
-const disabledButton = css`
-  background-color: #d9d9d9;
-  cursor: not-allowed;
-
-  &:hover {
-    background-color: #d9d9d9;
-  }
-`;
-
-const BottomButton = styled.button<{ $disabled: boolean }>`
-  ${({ $disabled }) => ($disabled ? disabledButton : null)};
 `;
