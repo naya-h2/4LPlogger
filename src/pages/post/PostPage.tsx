@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import addIcon from "assets/icon/add-img.svg";
 import { ChangeEvent, useState } from "react";
+import useModal from "hooks/useModal";
+import PloggingModal from "components/Modal/PloggingModal";
 
-//TODO1: 인증버튼 state
-//TODO3: 모달
 function PostPage() {
+  const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
 
   const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
+    if (event.target.files?.length === 0 || !event.target.files) return;
     setImgUrl(URL.createObjectURL(event.target.files[0]));
   };
 
@@ -33,11 +34,12 @@ function PostPage() {
               <Value>3.3345</Value>
             </ResultBox>
           </ResultWrapper>
-          <Button>인증하기</Button>
+          <Button onClick={handleModalOpen}>인증하기</Button>
           플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
         </CardContainer>
       </ContentWrapper>
       <button>기록하기</button>
+      {isOpen && <PloggingModal hideModal={handleModalClose} />}
     </Container>
   );
 }
