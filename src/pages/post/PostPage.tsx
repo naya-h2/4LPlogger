@@ -1,7 +1,17 @@
 import styled from "styled-components";
 import addIcon from "assets/icon/add-img.svg";
+import { ChangeEvent, useState } from "react";
 
+//TODO1: 인증버튼 state
+//TODO3: 모달
 function PostPage() {
+  const [imgUrl, setImgUrl] = useState("");
+
+  const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    setImgUrl(URL.createObjectURL(event.target.files[0]));
+  };
+
   return (
     <Container>
       <ContentWrapper>
@@ -9,9 +19,9 @@ function PostPage() {
         <CardContainer>
           <Date>2024-05-08</Date>
           쓰레기 사진을 찍어 플로깅을 인증하세요.
-          <ImgAddBox>
-            <ImgAddIcon src={addIcon} />
-            <input type="file" hidden accept="image/*" />
+          <ImgAddBox $imgUrl={imgUrl}>
+            {imgUrl === "" && <ImgAddIcon src={addIcon} />}
+            <input type="file" hidden accept="image/*" onChange={handleImgChange} />
           </ImgAddBox>
           <ResultWrapper>
             <ResultBox>
@@ -107,7 +117,7 @@ const Value = styled.div`
   font-weight: 700;
 `;
 
-const ImgAddBox = styled.label`
+const ImgAddBox = styled.label<{ $imgUrl: string }>`
   width: 100%;
   height: 240px;
   padding-bottom: 100%;
@@ -115,6 +125,9 @@ const ImgAddBox = styled.label`
   position: relative;
 
   background: rgba(217, 217, 217, 0.75);
+  background-image: ${({ $imgUrl }) => ($imgUrl ? `url(${$imgUrl})` : `none`)};
+  background-position: center;
+  background-size: cover;
   cursor: pointer;
 `;
 
