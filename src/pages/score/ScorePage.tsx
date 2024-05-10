@@ -3,13 +3,16 @@ import BottomBtnLayout from "pages/BottomBtnLayout";
 import styled from "styled-components";
 import runCloverIcon from "assets/icon/logo-run.svg";
 import ProgressBar from "components/ProgressBar";
+import useModal from "hooks/useModal";
+import CloverModal from "components/Modal/CloverModal";
 
 function ScorePage() {
+  const { isOpen, handleModalClose, handleModalOpen } = useModal();
   const goal = 5.0;
   const km = 3.3345;
 
   return (
-    <BottomBtnLayout titleText="플로깅을 분석할게요📝" btnText="확인">
+    <BottomBtnLayout titleText="플로깅을 분석할게요📝" btnText="확인" btnClickFunc={handleModalOpen}>
       <Card>
         오늘의 플로깅 점수는요 ...🤔
         <ResultWrapper>
@@ -20,6 +23,7 @@ function ScorePage() {
         <ProgressBar ratio={(km / goal) * 100} />
         <ScoreWrapper>{`${Math.round((km / goal) * 100)} 점`}</ScoreWrapper>
       </Card>
+      {isOpen && <CloverModal hideModal={handleModalClose} cloverCount={Math.round(((km / goal) * 100) / 10)} />}
     </BottomBtnLayout>
   );
 }
