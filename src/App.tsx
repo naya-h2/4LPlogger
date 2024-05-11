@@ -11,6 +11,7 @@ import ScorePage from "pages/score/ScorePage";
 import SettingPage from "pages/setting/SettingPage";
 import SignupPage from "pages/signup/SignupPage";
 import { Route, Routes } from "react-router-dom";
+import KakaoRedirectHandler from "./pages/KakaoRedirectHandler";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/calendar" element={<CalendarPage />} />
         <Route path="/score" element={<ScorePage />} />
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/login/oauth" element={<KakaoRedirectHandler />} />
       </Routes>
     </MobileLayout>
   );
