@@ -9,7 +9,8 @@ import CloverModal from "components/Modal/CloverModal";
 function ScorePage() {
   const { isOpen, handleModalClose, handleModalOpen } = useModal();
   const goal = 5.0;
-  const km = 3.3345;
+  // const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
+  const km = 3.234;
 
   return (
     <BottomBtnLayout titleText="플로깅을 분석할게요📝" btnText="확인" btnClickFunc={handleModalOpen}>
