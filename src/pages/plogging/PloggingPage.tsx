@@ -1,11 +1,15 @@
+import KakaoMap from "components/Map";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import pauseIcon from "assets/icon/plogging-pause.svg";
+import startIcon from "assets/icon/plogging-restart.svg";
 
 function PloggingPage() {
   const navigate = useNavigate();
   const [sec, setSec] = useState(0);
   const [dst, setDst] = useState(0.0);
+  const [isStop, setIsStop] = useState(false);
 
   const calcSec = () => {
     setSec((prev) => ++prev);
@@ -33,8 +37,9 @@ function PloggingPage() {
 
   useEffect(() => {
     const timer = setInterval(calcSec, 1000);
+    if (isStop) clearInterval(timer);
     return () => clearInterval(timer);
-  }, []);
+  }, [isStop]);
 
   return (
     <Container>
@@ -45,6 +50,10 @@ function PloggingPage() {
         </Distance>
         <Button onClick={handleStopClick}>종료</Button>
       </ResultSection>
+      <KakaoMap />
+      <StopBtn onClick={() => setIsStop((prev) => !prev)}>
+        <img src={isStop ? startIcon : pauseIcon} />
+      </StopBtn>
     </Container>
   );
 }
@@ -52,7 +61,7 @@ function PloggingPage() {
 export default PloggingPage;
 
 const Container = styled.div`
-  margin-top: 24px;
+  margin-top: 28px;
 `;
 
 const Button = styled.button`
@@ -79,7 +88,7 @@ const ResultSection = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 `;
 
@@ -92,4 +101,21 @@ const Distance = styled.div`
 const Span = styled.span`
   font-size: 16px;
   color: #cdcdcd;
+`;
+
+const StopBtn = styled.button`
+  background-color: black;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  box-shadow: 0 3px 3px 3px rgba(64, 60, 67, 0.16);
+
+  position: fixed;
+  bottom: 24px;
+  left: 45%;
+  z-index: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
