@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import MobileLayout from "pages/MobileLayout";
 import NotFoundPage from "pages/NotFoundPage";
 import CalendarPage from "pages/calendar/CalendarPage";
@@ -14,13 +15,14 @@ import { Route, Routes } from "react-router-dom";
 import KakaoRedirectHandler from "./pages/KakaoRedirectHandler";
 
 function App() {
+  const [nickname, setNickname] = useState(""); // 닉네임 상태 추가
   return (
     <MobileLayout>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/signup" element={<SignupPage setNickname={setNickname} />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/setting" element={<SettingPage />} />
+        <Route path="/setting" element={<SettingPage nickname={nickname} setNickname={setNickname} />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/goal" element={<GoalPage />} />
         <Route path="/plogging" element={<PloggingPage />} />
