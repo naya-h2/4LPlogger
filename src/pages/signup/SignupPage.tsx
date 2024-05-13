@@ -75,15 +75,10 @@ const LoginText = styled.span`
   }
 `;
 
-interface SignupPageProps {
-  setNickname: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const SignupPage: React.FC<SignupPageProps> = ({ setNickname }) => {
-  const [nickname, setNicknameLocal] = useState("");
+function SignupPage() {
+  const [nickname, setNickname] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNicknameLocal(event.target.value);
     setNickname(event.target.value);
   };
   const handleSignup = () => {
@@ -112,6 +107,6 @@ const SignupPage: React.FC<SignupPageProps> = ({ setNickname }) => {
       </div>
     </div>
   );
-};
+}
 
 export default SignupPage;
