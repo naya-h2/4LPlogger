@@ -2,6 +2,40 @@ import React, { useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+function SignupPage() {
+  const [nickname, setNickname] = useState("");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
+  const handleSignup = () => {
+    console.log("가입 버튼 클릭됨:", nickname);
+    // 가입 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
+
+    // 페이지 이동
+    window.location.href = "http://localhost:3000/";
+  };
+
+  return (
+    <div>
+      <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
+      <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
+      <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
+
+      <div style={{ marginTop: "20px" }}>
+        <Label htmlFor="nicknameInput">닉네임</Label>
+        <Input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
+        <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>닉네임은 10글자 이하로 설정해주세요.</Label>
+        <Button onClick={handleSignup}>가입하기</Button>
+        <LoginLink to="/login">
+          <span>이미 가입하셨나요? </span>
+          <LoginText>로그인 하기</LoginText>
+        </LoginLink>
+      </div>
+    </div>
+  );
+}
+
 // 스타일드 컴포넌트 정의
 const CloverLogoImage = styled.img`
   width: auto;
@@ -74,39 +108,4 @@ const LoginText = styled.span`
     border-bottom: 1px solid #54a300; /* 호버 시 밑줄 효과 추가 */
   }
 `;
-
-function SignupPage() {
-  const [nickname, setNickname] = useState("");
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
-  };
-  const handleSignup = () => {
-    console.log("가입 버튼 클릭됨:", nickname);
-    // 가입 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
-
-    // 페이지 이동
-    window.location.href = "http://localhost:3000/";
-  };
-
-  return (
-    <div>
-      <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
-      <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
-      <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
-
-      <div style={{ marginTop: "20px" }}>
-        <Label htmlFor="nicknameInput">닉네임</Label>
-        <Input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
-        <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>닉네임은 10글자 이하로 설정해주세요.</Label>
-        <Button onClick={handleSignup}>가입하기</Button>
-        <LoginLink to="/login">
-          <span>이미 가입하셨나요? </span>
-          <LoginText>로그인 하기</LoginText>
-        </LoginLink>
-      </div>
-    </div>
-  );
-}
-
 export default SignupPage;
