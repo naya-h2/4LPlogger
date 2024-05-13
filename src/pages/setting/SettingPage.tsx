@@ -9,8 +9,13 @@ function SettingPage() {
   };
 
   const handleSave = () => {
-    console.log("저장 버튼 클릭됨:", nickname);
-    // 저장 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
+    const confirmed = window.confirm("변경된 내용을 저장하고 홈으로 이동하시겠습니까?");
+    if (confirmed) {
+      // 저장 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
+
+      // 홈으로 이동
+      window.location.href = "http://localhost:3000/";
+    }
   };
 
   return (
