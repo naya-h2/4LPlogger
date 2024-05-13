@@ -23,8 +23,9 @@ const Container = styled.div`
   background-color: white;
   color: #4e4e4e;
 
-  position: fixed;
+  position: absolute;
   top: 0;
+  left: 0;
 
   display: flex;
   align-items: center;

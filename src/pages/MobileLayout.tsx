@@ -9,10 +9,10 @@ interface Props {
 
 function MobileLayout({ children }: Props) {
   return (
-    <Background>
+    <Container>
       {IS_HEADER.includes(window.location.pathname.toLocaleLowerCase()) && <Header />}
-      <Container>{children}</Container>
-    </Background>
+      {children}
+    </Container>
   );
 }
 
@@ -24,6 +24,9 @@ const Container = styled.div`
   min-width: 320px;
   height: 100vh;
   padding: 32px 16px;
+  margin: 0 auto;
+
+  position: relative;
 
   background-color: #f4ffe9;
   box-shadow: 0 5px 5px 5px rgba(64, 60, 67, 0.16);
