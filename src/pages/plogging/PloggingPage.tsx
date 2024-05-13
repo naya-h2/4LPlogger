@@ -1,9 +1,10 @@
-import KakaoMap, { MemoizedMap } from "components/Map";
+import { MemoizedMap } from "components/Map";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import pauseIcon from "assets/icon/plogging-pause.svg";
 import startIcon from "assets/icon/plogging-restart.svg";
+import { distance } from "utils/calcDistance";
 
 function PloggingPage() {
   const navigate = useNavigate();
@@ -46,8 +47,11 @@ function PloggingPage() {
           longitude: position.coords.longitude,
         };
         const curPosition = lastPosition[lastPosition.length - 1];
-        if (!curPosition.latitude && !curPosition.longitude) setLastPostion([newPosition]);
-        else setLastPostion((prev) => [...prev, newPosition]);
+        if (!curPosition.latitude || !curPosition.longitude) setLastPostion([newPosition]);
+        else {
+          setDst((prev) => prev + distance(newPosition.latitude, newPosition.longitude, curPosition.latitude || 0, curPosition.longitude || 0));
+          setLastPostion((prev) => [...prev, newPosition]);
+        }
       },
       null,
       { enableHighAccuracy: true },

@@ -8,6 +8,8 @@ declare const window: typeof globalThis & {
 
 interface Props {
   curPositionArr: { latitude: number | null; longitude: number | null }[];
+  dst?: any;
+  setDst?: any;
 }
 
 function KakaoMap({ curPositionArr }: Props) {
