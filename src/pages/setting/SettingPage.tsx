@@ -1,22 +1,27 @@
 import React, { useState, ChangeEvent } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-interface SettingPageProps {
-  nickname: string;
-  setNickname: React.Dispatch<React.SetStateAction<string>>;
-}
+function SettingPage() {
+  const [nickname, setNickname] = useState("");
 
-function SettingPage({ nickname }: SettingPageProps) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setNickname(event.target.value);
+  };
+
+  const handleSave = () => {
+    console.log("저장 버튼 클릭됨:", nickname);
+    // 저장 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
+  };
+
   return (
     <div>
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
 
       <div style={{ marginTop: "20px" }}>
         <Label htmlFor="nicknameInput">닉네임</Label>
-        <Input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요." value={nickname} />
+        <Input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
         <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>닉네임은 10글자 이하로 설정해주세요.</Label>
-        <Button>저장하기</Button>
+        <Button onClick={handleSave}>저장하기</Button>
       </div>
     </div>
   );
@@ -24,9 +29,10 @@ function SettingPage({ nickname }: SettingPageProps) {
 
 const CloverProfileImage = styled.img`
   width: auto;
-  height: 100px;
-  margin-top: 50px;
-  margin-left: 50px;
+  height: 150px;
+  margin-top: 150px;
+  margin-left: 140px;
+  margin-bottom: 80px;
 `;
 
 const Label = styled.label`
