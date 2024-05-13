@@ -1,5 +1,5 @@
-import KakaoMap from "components/Map";
-import { useCallback, useEffect, useState } from "react";
+import KakaoMap, { MemoizedMap } from "components/Map";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import pauseIcon from "assets/icon/plogging-pause.svg";
@@ -9,8 +9,10 @@ function PloggingPage() {
   const navigate = useNavigate();
   const [sec, setSec] = useState(0);
   const [dst, setDst] = useState(0.0);
+  const [lastPosition, setLastPostion] = useState<{ latitude: number | null; longitude: number | null }[]>([{ latitude: null, longitude: null }]); //초기 위치: 서강대
   const [isStop, setIsStop] = useState(false);
 
+  // time
   const calcSec = () => {
     setSec((prev) => ++prev);
   };
@@ -35,11 +37,39 @@ function PloggingPage() {
     }
   };
 
+  // distance
+  const calcDst = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const newPosition = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+        const curPosition = lastPosition[lastPosition.length - 1];
+        if (!curPosition.latitude && !curPosition.longitude) setLastPostion([newPosition]);
+        else setLastPostion((prev) => [...prev, newPosition]);
+      },
+      null,
+      { enableHighAccuracy: true },
+    );
+  };
+
   useEffect(() => {
+    const position = setInterval(calcDst, 1000 * 5);
     const timer = setInterval(calcSec, 1000);
-    if (isStop) clearInterval(timer);
-    return () => clearInterval(timer);
+    if (isStop) {
+      clearInterval(timer);
+      clearInterval(position);
+    }
+    return () => {
+      clearInterval(timer);
+      clearInterval(position);
+    };
   }, [isStop]);
+
+  useEffect(() => {
+    calcDst();
+  }, []);
 
   return (
     <Container>
@@ -50,7 +80,7 @@ function PloggingPage() {
         </Distance>
         <Button onClick={handleStopClick}>종료</Button>
       </ResultSection>
-      <KakaoMap />
+      <MemoizedMap curPositionArr={lastPosition} />
       <StopBtn onClick={() => setIsStop((prev) => !prev)}>
         <img src={isStop ? startIcon : pauseIcon} />
       </StopBtn>
@@ -112,7 +142,8 @@ const StopBtn = styled.button`
 
   position: fixed;
   bottom: 24px;
-  left: 45%;
+  left: 50%;
+  margin-left: -30px;
   z-index: 1;
 
   display: flex;
