@@ -1,8 +1,6 @@
-import React from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom"; // Link 추가
+import React, { useState } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import styled from "styled-components";
-
-const { Kakao } = window;
 
 function LoginPage() {
   const loginWithKakao = () => {
@@ -14,11 +12,8 @@ function LoginPage() {
 
   return (
     <Container>
-      {/* Logo 이미지 */}
       <LogoLetterImage src={"/logo-letter.svg"} alt="Logo Letter" />
-      {/* Clover Logo 이미지 */}
       <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
-      {/* Letter Login 이미지 */}
       <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
 
       {/* 카카오 로그인 버튼 */}
@@ -33,7 +28,6 @@ function LoginPage() {
   );
 }
 
-// 스타일링된 컨테이너 및 링크
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,7 +37,6 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-// 이미지 스타일링
 const Image = styled.img`
   margin-bottom: 30px;
 `;
@@ -64,7 +57,7 @@ const CloverLogoImage = styled(Image)`
 const LetterLoginImage = styled(Image)`
   width: 300px;
   height: 75px;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 `;
 
 const LoginButtonImage = styled(Image)`
@@ -82,20 +75,32 @@ const LoginButtonImage = styled(Image)`
   }
 `;
 
-// 링크 스타일링
 const SignupLink = styled(Link)`
   text-decoration: none;
 `;
 
 const SignupText = styled.span`
-  color: #54a300; /* 회원가입 텍스트 색상 */
+  color: #54a300;
   border-bottom: 1px solid transparent;
   cursor: pointer;
-  transition: border-bottom 0.3s ease; /* 밑줄 효과를 위한 transition */
+  transition: border-bottom 0.3s ease;
 
   &:hover {
-    border-bottom: 1px solid #54a300; /* 호버 시 밑줄 효과 추가 */
+    border-bottom: 1px solid #54a300;
   }
+`;
+
+const Button = styled.button`
+  width: 400px;
+  height: 60px;
+  background-color: #54a300;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 export default LoginPage;
