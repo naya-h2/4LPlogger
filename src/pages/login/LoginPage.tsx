@@ -1,18 +1,59 @@
-import React from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom"; // Link 추가
+import React, { useState } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
 function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        // 로그인 성공
+        console.log("로그인 성공");
+      } else {
+        // 로그인 실패
+        console.error("로그인 실패");
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+    }
+  };
+
   return (
     <Container>
-      {/* Logo 이미지 */}
       <LogoLetterImage src={"/logo-letter.svg"} alt="Logo Letter" />
-      {/* Clover Logo 이미지 */}
       <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
-      {/* Letter Login 이미지 */}
       <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
 
-      {/* "회원이 아니신가요? 회원가입 하기" 링크 */}
+      <form onSubmit={handleSubmit}>
+        <InputContainer>
+          <input type="email" placeholder="이메일" value={email} onChange={handleEmailChange} />
+        </InputContainer>
+        <InputContainer>
+          <input type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange} />
+        </InputContainer>
+        <Button type="submit">로그인</Button>
+      </form>
+
       <SignupLink to="/signup">
         <span>회원이 아니신가요? </span>
         <SignupText>회원가입 하기</SignupText>
@@ -21,7 +62,6 @@ function LoginPage() {
   );
 }
 
-// 스타일링된 컨테이너 및 링크
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,7 +71,6 @@ const Container = styled.div`
   margin-top: 20px;
 `;
 
-// 이미지 스타일링
 const Image = styled.img`
   margin-bottom: 30px;
 `;
@@ -52,23 +91,47 @@ const CloverLogoImage = styled(Image)`
 const LetterLoginImage = styled(Image)`
   width: 300px;
   height: 75px;
-  margin-bottom: 70px;
+  margin-bottom: 30px;
 `;
 
-// 링크 스타일링
+const InputContainer = styled.div`
+  margin-bottom: 1px;
+
+  input {
+    width: 400px;
+    height: 50px;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+  }
+`;
+
 const SignupLink = styled(Link)`
   text-decoration: none;
 `;
 
 const SignupText = styled.span`
-  color: #54a300; /* 회원가입 텍스트 색상 */
+  color: #54a300;
   border-bottom: 1px solid transparent;
   cursor: pointer;
-  transition: border-bottom 0.3s ease; /* 밑줄 효과를 위한 transition */
+  transition: border-bottom 0.3s ease;
 
   &:hover {
-    border-bottom: 1px solid #54a300; /* 호버 시 밑줄 효과 추가 */
+    border-bottom: 1px solid #54a300;
   }
+`;
+
+const Button = styled.button`
+  width: 400px;
+  height: 60px;
+  background-color: #54a300;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 export default LoginPage;
