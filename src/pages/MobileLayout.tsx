@@ -20,22 +20,18 @@ export default MobileLayout;
 
 const Container = styled.div`
   width: 100%;
-  max-width: 480px;
   min-width: 320px;
-  height: 100vh;
+  min-height: 100vh;
   padding: 32px 16px;
-  margin: 0 auto;
+  padding-top: 48px;
 
   position: relative;
 
   background-color: #f4ffe9;
   box-shadow: 0 5px 5px 5px rgba(64, 60, 67, 0.16);
-`;
 
-const Background = styled.div`
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  justify-content: center;
+  @media (min-width: 480px) {
+    margin: 0 auto;
+    width: 480px;
+  }
 `;
