@@ -2,16 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom"; // Link 추가
 import styled from "styled-components";
 
-const { Kakao } = window;
-
 function LoginPage() {
-  const loginWithKakao = () => {
-    Kakao.Auth.authorize({
-      redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/login/oauth`,
-      scope: "profile_nickname",
-    });
-  };
-
   return (
     <Container>
       {/* Logo 이미지 */}
@@ -20,9 +11,6 @@ function LoginPage() {
       <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
       {/* Letter Login 이미지 */}
       <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
-
-      {/* 카카오 로그인 버튼 */}
-      <LoginButtonImage src="/kakao_login_large_wide.png" alt="카카오 로그인" onClick={loginWithKakao} />
 
       {/* "회원이 아니신가요? 회원가입 하기" 링크 */}
       <SignupLink to="/signup">
@@ -65,21 +53,6 @@ const LetterLoginImage = styled(Image)`
   width: 300px;
   height: 75px;
   margin-bottom: 70px;
-`;
-
-const LoginButtonImage = styled(Image)`
-  width: 400px;
-  height: 60px;
-  cursor: pointer;
-  transition: filter 0.3s ease-in-out;
-
-  &:hover {
-    filter: brightness(90%);
-  }
-
-  &:active {
-    filter: brightness(90%);
-  }
 `;
 
 // 링크 스타일링
