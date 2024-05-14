@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import logoIcon from "../../assets/icon/logo-together.svg";
 import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
   return (
     <Container>
-      <img src={logoIcon} alt="네잎플로거 로고" />
+      <Logo src={logoIcon} alt="네잎플로거 로고" onClick={() => navigate("/")} />
       <Profile />
     </Container>
   );
@@ -30,4 +32,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const Logo = styled.img`
+  cursor: pointer;
 `;
