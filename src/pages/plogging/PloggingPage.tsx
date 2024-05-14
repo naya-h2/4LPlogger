@@ -5,6 +5,7 @@ import styled from "styled-components";
 import pauseIcon from "assets/icon/plogging-pause.svg";
 import startIcon from "assets/icon/plogging-restart.svg";
 import { distance } from "utils/calcDistance";
+import { calcTime } from "utils/calcTime";
 
 function PloggingPage() {
   const navigate = useNavigate();
@@ -26,16 +27,6 @@ function PloggingPage() {
     localStorage.setItem("ploggingResult", JSON.stringify(result));
     // console.log(JSON.parse(localStorage.getItem("ploggingResult") || ""));
     navigate("/score");
-  };
-
-  const calcTime = (sec: number, type: "m" | "h") => {
-    switch (type) {
-      case "m":
-        if (sec / 60 >= 60) return (sec / 60) % 60;
-        return Math.round(sec / 60);
-      case "h":
-        return Math.round(sec / 3600);
-    }
   };
 
   // distance

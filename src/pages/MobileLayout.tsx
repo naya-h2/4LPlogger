@@ -24,6 +24,7 @@ const Container = styled.div`
   min-width: 320px;
   height: 100vh;
   padding: 32px 16px;
+  padding-top: 48px;
   margin: 0 auto;
 
   position: relative;
