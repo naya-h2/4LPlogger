@@ -3,13 +3,14 @@ import styled from "styled-components";
 interface Props {
   category: string;
   value: string;
+  isSmall?: boolean;
 }
 
-function ScoreBox({ category, value }: Props) {
+function ScoreBox({ category, value, isSmall = false }: Props) {
   return (
     <ResultBox>
       <Category>{category}</Category>
-      <Value>{value}</Value>
+      <Value $isSmall={isSmall}>{value}</Value>
     </ResultBox>
   );
 }
@@ -29,10 +30,10 @@ const Category = styled.div`
   text-align: center;
 `;
 
-const Value = styled.div`
+const Value = styled.div<{ $isSmall: boolean }>`
   color: #54a300;
 
   text-align: center;
-  font-size: 24px;
+  font-size: ${({ $isSmall }) => ($isSmall ? "20px" : "24px")};
   font-weight: 700;
 `;

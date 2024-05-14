@@ -8,6 +8,7 @@ interface Props {
     goal: number;
     distance: number;
     time: number;
+    imgSrc?: string;
   };
 }
 
@@ -16,11 +17,12 @@ function RecordCard({ data }: Props) {
     <Container>
       {data.date}
       <ScoreWrapper>
-        <ScoreBox category="목표(km)" value={`${data.goal}`} />
-        <ScoreBox category="km" value={`${data.distance}`} />
+        <ScoreBox category="목표(km)" value={`${data.goal}`} isSmall />
+        <ScoreBox category="km" value={`${data.distance}`} isSmall />
         <ScoreBox
           category="시간"
           value={`${calcTime(data.time, "h").toString().padStart(2, "0")} : ${calcTime(data.time, "m").toString().padStart(2, "0")} : ${(data.time % 60).toString().padStart(2, "0")}`}
+          isSmall
         />
       </ScoreWrapper>
     </Container>

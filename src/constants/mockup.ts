@@ -10,6 +10,7 @@ export const MONTH = [
     goal: 5,
     distance: 3.3345,
     time: 1830,
+    imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1F-PvNRrizvUMzeHP5yhaYFwQ3kMIJkJ0EBsEEhy2LQ&s",
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ export const MONTH = [
     goal: 5,
     distance: 3.3345,
     time: 1830,
+    imgSrc: "https://cdn.imweb.me/upload/S20221129c3c04fdc67a8b/7522242fb2fef.jpg",
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ export const MONTH = [
     goal: 5,
     distance: 3.3345,
     time: 1830,
+    imgSrc: "https://cdn.imweb.me/upload/S20221129c3c04fdc67a8b/7522242fb2fef.jpg",
   },
   {
     id: 4,
@@ -31,5 +34,6 @@ export const MONTH = [
     goal: 5,
     distance: 3.3345,
     time: 1830,
+    imgSrc: "https://thumb.mt.co.kr/06/2024/05/2024050214127215509_1.jpg",
   },
 ];

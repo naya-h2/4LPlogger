@@ -16,7 +16,7 @@ export default Header;
 const Container = styled.div`
   height: 48px;
   width: 100%;
-  max-width: 480px;
+  /* max-width: 480px; */
   min-width: 320px;
   padding: 6px 14px;
 
