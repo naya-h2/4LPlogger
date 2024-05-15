@@ -18,7 +18,7 @@ function SettingPage() {
     const data = isChangingNickname ? { nickname } : { password };
 
     try {
-      const response = await fetch("http://localhost:8080/api/settings", {
+      const response = await fetch("http://localhost:8080/api/setting", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,22 +27,30 @@ function SettingPage() {
       });
 
       if (response.ok) {
-        console.log("데이터 저장 성공");
-        // Add logic here if needed after successful save
+        // 데이터 변경 성공
+        console.log("데이터 변경 성공");
       } else {
-        console.error("데이터 저장 실패");
-        // Add error handling logic here
+        // 데이터 변경 실패
+        console.error("데이터 변경 실패");
       }
     } catch (error) {
-      console.error("데이터 저장 에러:", error);
-      // Add error handling logic here
+      console.error("데이터 변경 에러 발생:", error);
+    }
+  };
+
+  const handleConfirmSave = () => {
+    const confirmed = window.confirm("변경된 내용을 저장하고 홈으로 이동하시겠습니까?");
+    if (confirmed) {
+      handleSave(); // 저장 함수 호출
+      // 홈으로 이동
+      window.location.href = "http://localhost:3000/";
     }
   };
 
   return (
     <div>
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
-
+      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
       <div style={{ marginTop: "20px" }}>
         <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "비밀번호"}</Label>
         <Input
@@ -55,11 +63,8 @@ function SettingPage() {
         <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>
           {isChangingNickname ? "닉네임은 10글자 이하로 설정해주세요." : "비밀번호는 6글자 이상으로 설정해주세요."}
         </Label>
-        <Button onClick={handleSave}>저장하기</Button>
+        <Button onClick={handleConfirmSave}>저장하기</Button>
       </div>
-
-      {/* Toggle button moved below the main content */}
-      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
     </div>
   );
 }
@@ -69,7 +74,7 @@ const CloverProfileImage = styled.img`
   height: 150px;
   margin-top: 150px;
   margin-left: 140px;
-  margin-bottom: 80px;
+  margin-bottom: 10px;
 `;
 
 const Label = styled.label`
@@ -105,14 +110,23 @@ const Button = styled.button`
 `;
 
 const ToggleButton = styled.button`
-  margin-top: 20px;
-  margin-left: 30px;
+  width: 200px;
+  height: 45px;
+  margin-top: 10px;
+  margin-left: 125px;
+  margin-bottom: 30px;
   cursor: pointer;
   font-size: 16px;
   color: #54a300;
-  border: none;
-  background: none;
-  text-decoration: underline;
+  border: 2px solid #d9d9d9;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 10px 20px; /* Updated padding for smaller button */
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;
 
 export default SettingPage;
