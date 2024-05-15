@@ -18,7 +18,7 @@ function SettingPage() {
     const data = isChangingNickname ? { nickname } : { password };
 
     try {
-      const response = await fetch("http://localhost:8080/api/setting", {
+      const response = await fetch("http://localhost:8080/api/settings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,21 +27,22 @@ function SettingPage() {
       });
 
       if (response.ok) {
-        // 데이터 변경 성공
-        console.log("데이터 변경 성공");
+        console.log("데이터 저장 성공");
+        // Add logic here if needed after successful save
       } else {
-        // 데이터 변경 실패
-        console.error("데이터 변경 실패");
+        console.error("데이터 저장 실패");
+        // Add error handling logic here
       }
     } catch (error) {
-      console.error("데이터 변경 에러 발생:", error);
+      console.error("데이터 저장 에러:", error);
+      // Add error handling logic here
     }
   };
 
   return (
     <div>
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
-      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
+
       <div style={{ marginTop: "20px" }}>
         <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "비밀번호"}</Label>
         <Input
@@ -56,6 +57,9 @@ function SettingPage() {
         </Label>
         <Button onClick={handleSave}>저장하기</Button>
       </div>
+
+      {/* Toggle button moved below the main content */}
+      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
     </div>
   );
 }
@@ -65,7 +69,7 @@ const CloverProfileImage = styled.img`
   height: 150px;
   margin-top: 150px;
   margin-left: 140px;
-  margin-bottom: 10px;
+  margin-bottom: 80px;
 `;
 
 const Label = styled.label`
@@ -101,22 +105,14 @@ const Button = styled.button`
 `;
 
 const ToggleButton = styled.button`
-  width: 200px;
-  height: 45px;
-  margin-top: 10px;
-  margin-left: 125px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-left: 30px;
   cursor: pointer;
   font-size: 16px;
   color: #54a300;
-  border: 2px solid #d9d9d9;
-  background-color: #ffffff;
-  border-radius: 30px;
-  padding: 10px 20px; /* Updated padding for smaller button */
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: #f2f2f2;
-  }
+  border: none;
+  background: none;
+  text-decoration: underline;
 `;
+
 export default SettingPage;
