@@ -29,6 +29,7 @@ function LoginPage() {
       if (response.ok) {
         // 로그인 성공
         console.log("로그인 성공");
+        window.location.href = "/";
       } else {
         // 로그인 실패
         console.error("로그인 실패");
