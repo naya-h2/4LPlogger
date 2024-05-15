@@ -3,39 +3,11 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import styled from "styled-components";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleEmailChange = (e: any) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        // 로그인 성공
-        console.log("로그인 성공");
-      } else {
-        // 로그인 실패
-        console.error("로그인 실패");
-      }
-    } catch (error) {
-      console.error("에러 발생:", error);
-    }
+  const loginWithKakao = () => {
+    Kakao.Auth.authorize({
+      redirectUri: `${process.env.REACT_APP_FRONTEND_BASE_URL}/login/oauth`,
+      scope: "profile_nickname",
+    });
   };
 
   return (
@@ -44,16 +16,10 @@ function LoginPage() {
       <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
       <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
 
-      <form onSubmit={handleSubmit}>
-        <InputContainer>
-          <input type="email" placeholder="이메일" value={email} onChange={handleEmailChange} />
-        </InputContainer>
-        <InputContainer>
-          <input type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange} />
-        </InputContainer>
-        <Button type="submit">로그인</Button>
-      </form>
+      {/* 카카오 로그인 버튼 */}
+      <LoginButtonImage src="/kakao_login_large_wide.png" alt="카카오 로그인" onClick={loginWithKakao} />
 
+      {/* "회원이 아니신가요? 회원가입 하기" 링크 */}
       <SignupLink to="/signup">
         <span>회원이 아니신가요? </span>
         <SignupText>회원가입 하기</SignupText>
@@ -94,15 +60,18 @@ const LetterLoginImage = styled(Image)`
   margin-bottom: 30px;
 `;
 
-const InputContainer = styled.div`
-  margin-bottom: 1px;
+const LoginButtonImage = styled(Image)`
+  width: 400px;
+  height: 60px;
+  cursor: pointer;
+  transition: filter 0.3s ease-in-out;
 
-  input {
-    width: 400px;
-    height: 50px;
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
+  &:hover {
+    filter: brightness(90%);
+  }
+
+  &:active {
+    filter: brightness(90%);
   }
 `;
 
