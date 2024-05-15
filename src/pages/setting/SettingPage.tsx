@@ -3,14 +3,40 @@ import styled from "styled-components";
 
 function SettingPage() {
   const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [isChangingNickname, setIsChangingNickname] = useState(true); // True for changing nickname
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNickname(event.target.value);
+    if (isChangingNickname) {
+      setNickname(event.target.value);
+    } else {
+      setPassword(event.target.value);
+    }
   };
 
-  const handleSave = () => {
-    console.log("저장 버튼 클릭됨:", nickname);
-    // 저장 처리 로직을 추가하거나, 여기서 값을 저장하면 됩니다.
+  const handleSave = async () => {
+    const data = isChangingNickname ? { nickname } : { password };
+
+    try {
+      const response = await fetch("http://localhost:8080/api/settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("데이터 저장 성공");
+        // Add logic here if needed after successful save
+      } else {
+        console.error("데이터 저장 실패");
+        // Add error handling logic here
+      }
+    } catch (error) {
+      console.error("데이터 저장 에러:", error);
+      // Add error handling logic here
+    }
   };
 
   return (
@@ -18,11 +44,22 @@ function SettingPage() {
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
 
       <div style={{ marginTop: "20px" }}>
-        <Label htmlFor="nicknameInput">닉네임</Label>
-        <Input type="text" id="nicknameInput" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
-        <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>닉네임은 10글자 이하로 설정해주세요.</Label>
+        <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "비밀번호"}</Label>
+        <Input
+          type={isChangingNickname ? "text" : "password"}
+          id="inputField"
+          placeholder={isChangingNickname ? "닉네임을 입력하세요." : "비밀번호를 입력하세요."}
+          value={isChangingNickname ? nickname : password}
+          onChange={handleChange}
+        />
+        <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>
+          {isChangingNickname ? "닉네임은 10글자 이하로 설정해주세요." : "비밀번호는 6글자 이상으로 설정해주세요."}
+        </Label>
         <Button onClick={handleSave}>저장하기</Button>
       </div>
+
+      {/* Toggle button moved below the main content */}
+      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
     </div>
   );
 }
@@ -65,6 +102,17 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;
+`;
+
+const ToggleButton = styled.button`
+  margin-top: 20px;
+  margin-left: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #54a300;
+  border: none;
+  background: none;
+  text-decoration: underline;
 `;
 
 export default SettingPage;
