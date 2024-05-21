@@ -10,7 +10,5 @@ export function distance(lat1: number, lon1: number, lat2: number, lon2: number)
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distance = R * c; // 두 지점 간의 거리 (단위: km)
 
-  console.log(distance);
-
   return distance;
 }
