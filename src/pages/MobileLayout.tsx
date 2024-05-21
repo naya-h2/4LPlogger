@@ -22,7 +22,6 @@ const Container = styled.div`
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  padding: 32px 16px;
   padding-top: 48px;
 
   position: relative;

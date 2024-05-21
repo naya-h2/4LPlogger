@@ -10,9 +10,10 @@ import { calcTime } from "utils/calcTime";
 function PloggingPage() {
   const navigate = useNavigate();
   const [sec, setSec] = useState(0);
-  const [dst, setDst] = useState(0.0);
-  const [lastPosition, setLastPostion] = useState<{ latitude: number | null; longitude: number | null }[]>([{ latitude: null, longitude: null }]); //초기 위치: 서강대
+  const [dst, setDst] = useState(0);
+  const [lastPosition, setLastPosition] = useState<{ latitude: number | null; longitude: number | null }[]>([{ latitude: null, longitude: null }]);
   const [isStop, setIsStop] = useState(false);
+  const [mapInfo, setMapInfo] = useState<{ latitude: number; longitude: number; level: number }>({ latitude: -1, longitude: -1, level: 4 });
 
   // time
   const calcSec = () => {
@@ -22,26 +23,26 @@ function PloggingPage() {
   const handleStopClick = () => {
     const result = {
       time: sec,
-      km: 0,
+      km: dst,
     };
     localStorage.setItem("ploggingResult", JSON.stringify(result));
-    // console.log(JSON.parse(localStorage.getItem("ploggingResult") || ""));
-    navigate("/score");
+    navigate("/post");
   };
 
   // distance
-  const calcDst = () => {
+  const calcDst = (curPosition: { latitude: number | null; longitude: number | null }) => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const newPosition = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
-        const curPosition = lastPosition[lastPosition.length - 1];
-        if (!curPosition.latitude || !curPosition.longitude) setLastPostion([newPosition]);
-        else {
+        if (!curPosition.latitude || !curPosition.longitude) {
+          setLastPosition([newPosition]);
+          setMapInfo({ latitude: newPosition.latitude, longitude: newPosition.longitude, level: 4 });
+        } else {
           setDst((prev) => prev + distance(newPosition.latitude, newPosition.longitude, curPosition.latitude || 0, curPosition.longitude || 0));
-          setLastPostion((prev) => [...prev, newPosition]);
+          if (curPosition !== newPosition) setLastPosition((prev) => [...prev, newPosition]);
         }
       },
       null,
@@ -50,32 +51,38 @@ function PloggingPage() {
   };
 
   useEffect(() => {
-    const position = setInterval(calcDst, 1000 * 5);
     const timer = setInterval(calcSec, 1000);
     if (isStop) {
       clearInterval(timer);
-      clearInterval(position);
     }
     return () => {
       clearInterval(timer);
-      clearInterval(position);
     };
   }, [isStop]);
 
   useEffect(() => {
-    calcDst();
+    calcDst({ latitude: null, longitude: null });
   }, []);
+
+  useEffect(() => {
+    const position = setInterval(() => calcDst(lastPosition[lastPosition.length - 1]), 1000 * 5);
+    if (isStop) clearInterval(position);
+
+    return () => {
+      clearInterval(position);
+    };
+  }, [lastPosition, isStop]);
 
   return (
     <Container>
       <ResultSection>
-        <Timer>{`${calcTime(sec, "h").toString().padStart(2, "0")} : ${calcTime(sec, "m").toString().padStart(2, "0")} : ${(sec % 60).toString().padStart(2, "0")}`}</Timer>
+        <Timer>{calcTime(sec)}</Timer>
         <Distance>
           {dst.toFixed(4)} <Span>km</Span>
         </Distance>
         <Button onClick={handleStopClick}>종료</Button>
       </ResultSection>
-      <MemoizedMap curPositionArr={lastPosition} />
+      <MemoizedMap curPositionArr={lastPosition} mapInfo={mapInfo} setMapInfo={setMapInfo} />
       <StopBtn onClick={() => setIsStop((prev) => !prev)}>
         <img src={isStop ? startIcon : pauseIcon} />
       </StopBtn>
@@ -86,7 +93,7 @@ function PloggingPage() {
 export default PloggingPage;
 
 const Container = styled.div`
-  margin-top: 28px;
+  margin-top: 16px;
 `;
 
 const Button = styled.button`

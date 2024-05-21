@@ -1,6 +1,7 @@
 import React from "react";
 import ModalFrame from "./ModalFrame";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   hideModal: () => void;
@@ -8,6 +9,8 @@ interface Props {
 }
 
 function CloverModal({ hideModal, cloverCount }: Props) {
+  const navigate = useNavigate();
+
   return (
     <ModalFrame hideModal={hideModal}>
       <Content>
@@ -17,7 +20,14 @@ function CloverModal({ hideModal, cloverCount }: Props) {
         <br />총 <Clover>{cloverCount}</Clover>개<br />
         적립됐어요!
       </Content>
-      <Button onClick={hideModal}>확인</Button>
+      <Button
+        onClick={() => {
+          hideModal();
+          navigate("/");
+        }}
+      >
+        확인
+      </Button>
     </ModalFrame>
   );
 }
