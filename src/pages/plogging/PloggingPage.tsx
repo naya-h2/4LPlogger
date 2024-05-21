@@ -26,8 +26,7 @@ function PloggingPage() {
       km: dst,
     };
     localStorage.setItem("ploggingResult", JSON.stringify(result));
-    console.log(JSON.parse(localStorage.getItem("ploggingResult") || ""));
-    navigate("/score");
+    navigate("/post");
   };
 
   // distance
