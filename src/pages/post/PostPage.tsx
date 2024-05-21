@@ -6,20 +6,26 @@ import PloggingModal from "components/Modal/PloggingModal";
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import ScoreBox from "components/ScoreBox";
 import { calcTime } from "utils/calcTime";
+import { useNavigate } from "react-router-dom";
 
 function PostPage() {
   const today = new Date();
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
   const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
+  const navigate = useNavigate();
 
   const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.length === 0 || !event.target.files) return;
     setImgUrl(URL.createObjectURL(event.target.files[0]));
   };
 
+  const handlePostClick = () => {
+    navigate("/score");
+  };
+
   return (
-    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기">
+    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기" btnClickFunc={handlePostClick}>
       <CardContainer>
         <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
         쓰레기 사진을 찍어 플로깅을 인증하세요.
