@@ -19,7 +19,8 @@ function GoalPage() {
   const goalRegex = /^[0-9]*$/;
 
   const saveGoal = () => {
-    window.localStorage.setItem("goal", customGoal);
+    const value = selectedGoal === "직접 입력" ? customGoal : selectedGoal.replace("km", "");
+    window.localStorage.setItem("goal", value);
     navigate("/plogging");
   };
 
