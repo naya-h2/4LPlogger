@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import styled, { css } from "styled-components";
 
 interface Props {
@@ -29,7 +29,8 @@ function BottomBtnLayout({ children, titleText, btnText, disabled = false, btnCl
 export default BottomBtnLayout;
 
 const Container = styled.div`
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 48px);
+  padding: 0 16px 32px;
 
   display: flex;
   flex-direction: column;
