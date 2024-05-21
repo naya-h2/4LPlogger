@@ -1,11 +1,13 @@
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const DEFAULT_GOAL = ["1km", "2km", "3km", "직접 입력"];
 
 function GoalPage() {
+  const navigate = useNavigate();
   const [selectedGoal, setSelectedGoal] = useState("");
   const {
     register,
@@ -16,11 +18,17 @@ function GoalPage() {
 
   const goalRegex = /^[0-9]*$/;
 
+  const saveGoal = () => {
+    window.localStorage.setItem("goal", customGoal);
+    navigate("/plogging");
+  };
+
   return (
     <BottomBtnLayout
       titleText="목표를 설정하세요🔥"
       btnText="뛰러가기"
       disabled={selectedGoal === "" || Boolean(selectedGoal === "직접 입력" && (errors.customGoal || !customGoal))}
+      btnClickFunc={saveGoal}
     >
       <ButtonContainer>
         {DEFAULT_GOAL.map((goal) => (
