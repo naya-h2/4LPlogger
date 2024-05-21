@@ -8,8 +8,10 @@ interface Props {
 }
 
 function MobileLayout({ children }: Props) {
+  const isPlogging = window.location.pathname === "/plogging";
+
   return (
-    <Container>
+    <Container $isPlogging={isPlogging}>
       {IS_HEADER.includes(window.location.pathname.toLocaleLowerCase()) && <Header />}
       {children}
     </Container>
@@ -18,11 +20,11 @@ function MobileLayout({ children }: Props) {
 
 export default MobileLayout;
 
-const Container = styled.div`
+const Container = styled.div<{ $isPlogging: boolean }>`
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  padding: 32px 16px;
+  padding: ${({ $isPlogging }) => ($isPlogging ? "0" : "32px 16px")};
   padding-top: 48px;
 
   position: relative;

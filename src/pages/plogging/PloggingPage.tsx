@@ -86,7 +86,7 @@ function PloggingPage() {
 export default PloggingPage;
 
 const Container = styled.div`
-  margin-top: 28px;
+  margin-top: 16px;
 `;
 
 const Button = styled.button`

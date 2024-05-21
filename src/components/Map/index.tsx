@@ -80,5 +80,5 @@ export const MemoizedMap = React.memo(KakaoMap);
 
 const MapContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 238px);
+  min-height: calc(100vh - 239px);
 `;
