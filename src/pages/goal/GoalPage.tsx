@@ -1,14 +1,36 @@
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const DEFAULT_GOAL = ["1km", "2km", "3km", "직접 입력"];
 
 function GoalPage() {
+  const navigate = useNavigate();
   const [selectedGoal, setSelectedGoal] = useState("");
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
+  const { customGoal } = watch();
+
+  const goalRegex = /^[0-9]*$/;
+
+  const saveGoal = () => {
+    const value = selectedGoal === "직접 입력" ? customGoal : selectedGoal.replace("km", "");
+    window.localStorage.setItem("goal", value);
+    navigate("/plogging");
+  };
 
   return (
-    <BottomBtnLayout titleText="목표를 설정하세요🔥" btnText="뛰러가기" disabled={selectedGoal === ""}>
+    <BottomBtnLayout
+      titleText="목표를 설정하세요🔥"
+      btnText="뛰러가기"
+      disabled={selectedGoal === "" || Boolean(selectedGoal === "직접 입력" && (errors.customGoal || !customGoal))}
+      btnClickFunc={saveGoal}
+    >
       <ButtonContainer>
         {DEFAULT_GOAL.map((goal) => (
           <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
@@ -19,7 +41,8 @@ function GoalPage() {
       {selectedGoal === DEFAULT_GOAL[3] && (
         <InputContainer>
           <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
-          <input placeholder="1.234" />
+          <input {...register("customGoal", { required: "값을 입력해 주세요.", pattern: goalRegex })} placeholder="자연수로 입력해 주세요. (ex. 5)" />
+          <ErrorMsg>{errors.customGoal && "자연수로 입력해 주세요."}</ErrorMsg>
         </InputContainer>
       )}
     </BottomBtnLayout>
@@ -56,4 +79,8 @@ const InputContainer = styled.div`
   gap: 8px;
 
   font-size: 14px;
+`;
+
+const ErrorMsg = styled.div`
+  color: red;
 `;
