@@ -5,10 +5,13 @@ import useModal from "hooks/useModal";
 import PloggingModal from "components/Modal/PloggingModal";
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import ScoreBox from "components/ScoreBox";
+import { calcTime } from "utils/calcTime";
 
 function PostPage() {
+  const today = new Date();
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
+  const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
 
   const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.length === 0 || !event.target.files) return;
@@ -18,15 +21,15 @@ function PostPage() {
   return (
     <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기">
       <CardContainer>
-        <Date>2024-05-08</Date>
+        <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
         쓰레기 사진을 찍어 플로깅을 인증하세요.
         <ImgAddBox $imgUrl={imgUrl}>
           {imgUrl === "" && <ImgAddIcon src={addIcon} />}
           <input type="file" hidden accept="image/*" onChange={handleImgChange} />
         </ImgAddBox>
         <ResultWrapper>
-          <ScoreBox category="시간" value="00:30:59" />
-          <ScoreBox category="km" value="3.3345" />
+          <ScoreBox category="시간" value={calcTime(time)} />
+          <ScoreBox category="km" value={km.toFixed(4)} />
         </ResultWrapper>
         <Button onClick={handleModalOpen}>인증하기</Button>
         플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
@@ -54,7 +57,7 @@ const CardContainer = styled.div`
   gap: 8px;
 `;
 
-const Date = styled.div`
+const DateWrapper = styled.div`
   color: #bebebe;
   font-size: 14px;
   font-weight: 700;
