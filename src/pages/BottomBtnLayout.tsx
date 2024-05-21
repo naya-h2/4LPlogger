@@ -29,7 +29,7 @@ function BottomBtnLayout({ children, titleText, btnText, disabled = false, btnCl
 export default BottomBtnLayout;
 
 const Container = styled.div`
-  height: 100%;
+  min-height: calc(100vh - 80px);
 
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.div`
-  padding-top: 32px;
+  padding-top: 16px;
 
   text-align: center;
   font-size: 24px;
@@ -60,4 +60,9 @@ const disabledButton = css`
 
 const BottomButton = styled.button<{ $disabled: boolean }>`
   ${({ $disabled }) => ($disabled ? disabledButton : null)};
+
+  height: 56px;
+
+  font-size: 20px;
+  font-weight: 600;
 `;
