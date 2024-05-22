@@ -15,10 +15,6 @@
 
   font-family: "Pretendard-Regular";
   font-weight: 400;
-
-  @supports (-webkit-touch-callout: none) {
-    height: -webkit-fill-available;
-  }
 }
 
 button {

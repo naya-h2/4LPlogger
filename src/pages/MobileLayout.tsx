@@ -22,6 +22,7 @@ const Container = styled.div`
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   padding-top: 48px;
 
   position: relative;
