@@ -48,10 +48,10 @@ function SettingPage() {
   };
 
   return (
-    <div>
+    <Container>
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
       <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
-      <div style={{ marginTop: "20px" }}>
+      <FormContainer>
         <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "비밀번호"}</Label>
         <Input
           type={isChangingNickname ? "text" : "password"}
@@ -64,43 +64,55 @@ function SettingPage() {
           {isChangingNickname ? "닉네임은 10글자 이하로 설정해주세요." : "비밀번호는 6글자 이상으로 설정해주세요."}
         </Label>
         <Button onClick={handleConfirmSave}>저장하기</Button>
-      </div>
-    </div>
+      </FormContainer>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
+`;
 
 const CloverProfileImage = styled.img`
   width: auto;
   height: 150px;
-  margin-top: 150px;
-  margin-left: 140px;
-  margin-bottom: 10px;
+`;
+
+const FormContainer = styled.div`
+  width: 100%;
+  max-width: 600px; /* 최대 너비를 설정하여 너무 넓어지지 않도록 */
+  padding: 0 16px; /* 좌우 패딩 추가 */
+  box-sizing: border-box;
 `;
 
 const Label = styled.label`
   display: block;
   margin-top: 10px;
-  margin-left: 30px;
   color: #000000;
   font-weight: bold;
 `;
 
 const Input = styled.input`
-  width: 400px;
+  width: 100%;
   height: 60px; /* 원하는 높이로 조절하세요 */
   margin-top: 5px;
-  margin-left: 30px;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #bebebe;
   background-color: #ffffff;
   font-size: 16px;
+  box-sizing: border-box; /* 패딩과 보더를 포함한 전체 너비를 설정 */
 `;
 
 const Button = styled.button`
-  width: 400px;
+  width: 100%;
   height: 60px;
   margin-top: 50px;
-  margin-left: 30px;
   background-color: #54a300;
   color: #ffffff;
   border: none;
@@ -112,9 +124,6 @@ const Button = styled.button`
 const ToggleButton = styled.button`
   width: 200px;
   height: 45px;
-  margin-top: 10px;
-  margin-left: 125px;
-  margin-bottom: 30px;
   cursor: pointer;
   font-size: 16px;
   color: #54a300;
