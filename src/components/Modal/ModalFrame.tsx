@@ -35,13 +35,14 @@ const Mask = styled.div`
 `;
 
 const Body = styled.div`
-  width: 239px;
-  height: 155px;
+  width: 80vw;
+  height: 178px;
   padding: 16px 20px;
 
   display: flex;
   flex-direction: column;
   gap: 8px;
+  justify-content: space-between;
 
   border-radius: 10px;
   background: #fff;
