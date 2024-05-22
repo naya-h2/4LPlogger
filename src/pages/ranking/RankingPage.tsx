@@ -52,66 +52,66 @@ function RankingPage() {
           <RankText>1</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>달린다^^</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            150
           </CloverCount>
         </RankingBox>
         <RankingBox>
           <RankText>2</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>셔누오빠최고</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            121
           </CloverCount>
         </RankingBox>
         <RankingBox>
           <RankText>3</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>뛰기 싫다</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            111
           </CloverCount>
         </RankingBox>
         <RankingBox>
           <RankText>4</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>뛰어야겠지</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            109
           </CloverCount>
         </RankingBox>
         <RankingBox>
           <RankText>5</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>메롱</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            101
           </CloverCount>
         </RankingBox>
         <RankingBox>
           <RankText>6</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>메롱이다</Nickname>
+            <Nickname>히히</Nickname>
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
-            12000
+            98
           </CloverCount>
         </RankingBox>
       </RankingList>
