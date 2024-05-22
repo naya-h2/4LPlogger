@@ -52,10 +52,9 @@ function GoalPage() {
 export default GoalPage;
 
 const Button = styled.button<{ $selected: boolean }>`
-  width: 20%;
   padding: 12px 0px;
+  height: 56px;
 
-  font-size: 14px;
   font-weight: 400;
 
   border: 1px solid #54a300;
@@ -69,8 +68,11 @@ const Button = styled.button<{ $selected: boolean }>`
 `;
 
 const ButtonContainer = styled.div`
+  margin-top: 32px;
+
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 24px;
 `;
 
 const InputContainer = styled.div`
@@ -78,7 +80,7 @@ const InputContainer = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const ErrorMsg = styled.div`
