@@ -7,12 +7,16 @@ import BottomBtnLayout from "pages/BottomBtnLayout";
 import ScoreBox from "components/ScoreBox";
 import { calcTime } from "utils/calcTime";
 import { useNavigate } from "react-router-dom";
+import { TRASH } from "assets/data/trash";
+import { distance } from "utils/calcDistance";
+
+const MINIMUM = 0.01;
 
 function PostPage() {
   const today = new Date();
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
-  const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
+  const { km, time, lastPosition } = JSON.parse(localStorage.getItem("ploggingResult") || "");
   const navigate = useNavigate();
 
   const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +25,24 @@ function PostPage() {
   };
 
   const handlePostClick = () => {
+    //post API 요청할 곳
     navigate("/score");
+  };
+
+  const handleVerifyClick = () => {
+    let min = null;
+    for (const trash of TRASH) {
+      const dst = distance(trash.latitude, trash.longitude, lastPosition.latitude, lastPosition.longitude);
+      if (min === null) {
+        min = dst;
+        continue;
+      }
+      if (min > dst) min = dst;
+    }
+
+    if (MINIMUM < (min || 1000)) return alert("⚠️ 쓰레기통 근처로 이동해서 인증해주세요!");
+
+    //쓰레기통 위치 인증 성공
   };
 
   return (
@@ -37,7 +58,7 @@ function PostPage() {
           <ScoreBox category="시간" value={calcTime(time)} />
           <ScoreBox category="km" value={km.toFixed(4)} />
         </ResultWrapper>
-        <Button onClick={handleModalOpen}>인증하기</Button>
+        <Button onClick={handleVerifyClick}>인증하기</Button>
         플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
       </CardContainer>
       {isOpen && <PloggingModal hideModal={handleModalClose} />}

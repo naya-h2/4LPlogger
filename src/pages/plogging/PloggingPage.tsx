@@ -24,6 +24,7 @@ function PloggingPage() {
     const result = {
       time: sec,
       km: dst,
+      lastPosition: lastPosition[lastPosition.length - 1],
     };
     localStorage.setItem("ploggingResult", JSON.stringify(result));
     navigate("/post");
