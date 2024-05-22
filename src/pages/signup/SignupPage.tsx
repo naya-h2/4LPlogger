@@ -36,78 +36,106 @@ function SignupPage() {
   };
 
   return (
-    <div>
-      <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
-      <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
-      <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
-
-      <div style={{ marginTop: "10px" }}>
-        {/* Email Input */}
+    <Container>
+      <Image>
+        <LogoContainer>
+          <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
+          <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
+        </LogoContainer>
+        <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
+      </Image>
+      <Form>
         <Label htmlFor="emailInput">이메일</Label>
         <Input type="email" id="emailInput" name="email" placeholder="이메일을 입력하세요." value={email} onChange={handleChange} />
-        {/* Password Input */}
         <Label htmlFor="passwordInput">비밀번호</Label>
         <Input type="password" id="passwordInput" name="password" placeholder="비밀번호를 입력하세요." value={password} onChange={handleChange} />
-        {/* Nickname Input */}
         <Label htmlFor="nicknameInput">닉네임</Label>
         <Input type="text" id="nicknameInput" name="nickname" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
-        <Label style={{ marginTop: "3px", color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>닉네임은 10글자 이하로 설정해주세요.</Label>
+        <Label
+          style={{
+            marginTop: "3px",
+            color: "#bebebe",
+            fontWeight: "normal",
+            fontSize: "14px",
+          }}
+        >
+          닉네임은 10글자 이하로 설정해주세요.
+        </Label>
         <Button onClick={handleSignup}>가입하기</Button>
         <LoginLink to="/login">
           <span>이미 가입하셨나요? </span>
           <LoginText>로그인 하기</LoginText>
         </LoginLink>
-      </div>
-    </div>
+      </Form>
+    </Container>
   );
 }
 
-// 스타일드 컴포넌트 정의
+const Container = styled.div`
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+`;
+
+const Form = styled.div`
+  width: 100%;
+  max-width: 400px; /* 최대 너비 설정 */
+  margin-top: 10px;
+`;
+
+const Image = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 16px;
+  justify-content: center;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  gap: 24px;
+`;
+
 const CloverLogoImage = styled.img`
   width: auto;
   height: 100px;
-  margin-top: 50px;
-  margin-left: 50px;
 `;
 
 const LogoLetterImage = styled.img`
   width: 260px;
   height: auto;
-  margin-top: 200px;
-  margin-bottom: 5px;
 `;
 
 const SignupLetterImage = styled.img`
   width: 260px;
   height: auto;
-  margin-left: 100px;
-  margin-bottom: 80px;
 `;
 
 const Label = styled.label`
   display: block;
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 5px;
   color: #000000;
   font-weight: bold;
 `;
 
 const Input = styled.input`
-  width: 400px;
+  width: 100%;
   height: 60px; /* 원하는 높이로 조절하세요 */
   margin-top: 5px;
-  margin-left: 30px;
-  padding: 5px;
   border: 1px solid #bebebe;
   background-color: #ffffff;
   font-size: 16px;
 `;
 
 const Button = styled.button`
-  width: 400px;
+  width: 100%;
   height: 60px;
-  margin-top: 50px;
-  margin-left: 30px;
+  margin-top: 43px;
   background-color: #54a300;
   color: #ffffff;
   border: none;
@@ -116,12 +144,11 @@ const Button = styled.button`
   font-size: 20px;
 `;
 
-// 링크 스타일링
 const LoginLink = styled(Link)`
   text-decoration: none;
   display: block;
-  margin-left: 120px;
   margin-top: 20px; /* 버튼과 간격 조절 */
+  text-align: center;
 `;
 
 const LoginText = styled.span`
@@ -134,4 +161,5 @@ const LoginText = styled.span`
     border-bottom: 1px solid #54a300; /* 호버 시 밑줄 효과 추가 */
   }
 `;
+
 export default SignupPage;
