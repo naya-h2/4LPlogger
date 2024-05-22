@@ -45,15 +45,15 @@ function LoginPage() {
       <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
       <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
 
-      <Form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <InputContainer>
-          <input type="email" placeholder=" 이메일" value={email} onChange={handleEmailChange} />
+          <input type="email" placeholder="이메일" value={email} onChange={handleEmailChange} />
         </InputContainer>
         <InputContainer>
-          <input type="password" placeholder=" 비밀번호" value={password} onChange={handlePasswordChange} />
+          <input type="password" placeholder="비밀번호" value={password} onChange={handlePasswordChange} />
         </InputContainer>
         <Button type="submit">로그인</Button>
-      </Form>
+      </form>
 
       <SignupLink to="/signup">
         <span>회원이 아니신가요? </span>
@@ -64,21 +64,16 @@ function LoginPage() {
 }
 
 const Container = styled.div`
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding: 16px;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  margin-top: 20px;
 `;
 
 const Image = styled.img`
   margin-bottom: 30px;
-`;
-
-const Form = styled.form`
-  width: 100%;
 `;
 
 const LogoLetterImage = styled(Image)`
@@ -104,7 +99,7 @@ const InputContainer = styled.div`
   margin-bottom: 1px;
 
   input {
-    width: 100%;
+    width: 400px;
     height: 50px;
     margin-bottom: 10px;
     padding: 10px;
@@ -128,7 +123,7 @@ const SignupText = styled.span`
 `;
 
 const Button = styled.button`
-  width: 100%;
+  width: 400px;
   height: 60px;
   background-color: #54a300;
   color: #ffffff;
