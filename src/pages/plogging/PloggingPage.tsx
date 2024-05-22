@@ -38,6 +38,7 @@ function PloggingPage() {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
+        if (!newPosition.latitude || !newPosition.longitude) alert("현재 위치를 사용할 수 없습니다.");
         if (!curPosition.latitude || !curPosition.longitude) {
           setLastPosition([newPosition]);
           setMapInfo({ latitude: newPosition.latitude, longitude: newPosition.longitude, level: 4 });
@@ -46,7 +47,10 @@ function PloggingPage() {
           if (curPosition !== newPosition) setLastPosition((prev) => [...prev, newPosition]);
         }
       },
-      null,
+      () => {
+        alert("⚠️ 위치 서비스를 허용해 주세요!");
+        setIsStop(true);
+      },
       { enableHighAccuracy: true },
     );
   };
