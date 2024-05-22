@@ -36,8 +36,8 @@ function HomePage() {
   };
 
   return (
-    <div>
-      <TitleText>오늘의 클로버 랭킹 TOP 5🔥</TitleText>
+    <Container>
+      <TitleText>오늘의 클로버 랭킹 TOP 10🔥</TitleText>
 
       <RankingContainer>
         <ProfileCard>
@@ -60,6 +60,26 @@ function HomePage() {
           <ProfileImage src="/clover-profile.png" alt="Profile 5" />
           <Nickname>메롱</Nickname>
         </ProfileCard>
+        <ProfileCard>
+          <ProfileImage src="/clover-profile.png" alt="Profile 6" />
+          <Nickname>힘들다</Nickname>
+        </ProfileCard>
+        <ProfileCard>
+          <ProfileImage src="/clover-profile.png" alt="Profile 7" />
+          <Nickname>인생아</Nickname>
+        </ProfileCard>
+        <ProfileCard>
+          <ProfileImage src="/clover-profile.png" alt="Profile 8" />
+          <Nickname>오늘도팟팅</Nickname>
+        </ProfileCard>
+        <ProfileCard>
+          <ProfileImage src="/clover-profile.png" alt="Profile 9" />
+          <Nickname>전감자라구요</Nickname>
+        </ProfileCard>
+        <ProfileCard>
+          <ProfileImage src="/clover-profile.png" alt="Profile 10" />
+          <Nickname>아슈크림</Nickname>
+        </ProfileCard>
       </RankingContainer>
 
       <CloverBox>
@@ -78,15 +98,23 @@ function HomePage() {
         <br />
         플로깅에 참여해보세요! 우리의 작은 실천이 지구를 깨끗하게 만듭니다.
       </PloggingArticle>
-    </div>
+    </Container>
   );
 }
 
 export default HomePage;
 
+const Container = styled.div`
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+`;
+
 const TitleText = styled.div<{ second?: boolean }>`
-  position: absolute;
-  width: 300px; /* Adjusted width to fit longer text */
+  /* position: absolute; */
+  /* width: 300px;  */
   height: 24px;
   left: 16px;
   font-family: "Inter";
@@ -109,22 +137,22 @@ const Emoji = styled.span`
 
 const CloverBox = styled.div`
   box-sizing: border-box;
-  position: absolute;
-  width: 424px;
   height: 150px;
   left: 27px;
   top: 300px;
   background: #ffffff;
   border: 1px solid #bebebe;
   border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 45px;
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
 `;
 
 const CloverText = styled.div`
-  position: relative;
-  width: 288px;
-  height: 37px;
-  left: 60px;
-  top: 30px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
@@ -140,10 +168,6 @@ const ConfirmBtn = styled.button`
   height: 50px;
   font-size: 20px;
   border-radius: 30px;
-  position: relative;
-  top: 40px;
-  left: 50%;
-  margin-left: -75px;
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -157,11 +181,10 @@ const RankingContainer = styled.div`
   justify-content: flex-start; /* Align items to the start */
   gap: 20px; /* Set a consistent gap between cards */
   overflow-x: auto;
-  position: absolute;
   top: 120px; /* Adjust the top value as needed to position it correctly below the first TitleText */
   left: 16px;
-  width: calc(100% - 32px); /* Full width with padding adjustment */
-  height: 150px;
+  width: 100%;
+  height: 120px;
 `;
 
 const ProfileCard = styled.div`
@@ -169,12 +192,12 @@ const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 105px; /* Ensure a consistent width for each card */
+  width: 80px; /* Ensure a consistent width for each card */
 `;
 
 const ProfileImage = styled.img`
-  width: 105px;
-  height: 100px;
+  width: 85px;
+  height: 80px;
   border-radius: 50%;
 `;
 
@@ -192,15 +215,15 @@ const Nickname = styled.div`
 `;
 
 const PloggingArticle = styled.div`
-  position: absolute;
+  //position: absolute;
   top: 550px; /* Adjust the top value as needed to place it correctly below the second TitleText */
   left: 16px;
-  width: calc(100% - 32px);
+  width: 100%;
   font-family: "Inter";
   font-size: 18px;
   line-height: 1.6;
   color: #333;
-  background: #f9f9f9;
+  background: #e0e0e0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
