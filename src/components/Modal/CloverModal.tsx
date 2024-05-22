@@ -42,16 +42,16 @@ const Clover = styled.span`
 const Content = styled.div`
   color: #000;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 `;
 
 const Button = styled.button`
-  height: 32px;
+  height: 48px;
   padding: 8px 0;
   margin-top: 12px;
 
   color: #fff;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
 `;
