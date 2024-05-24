@@ -21,8 +21,8 @@ export default MobileLayout;
 const Container = styled.div`
   width: 100%;
   min-width: 320px;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  height: 100vh; /* Ensures the container height fills the entire screen height */
+  min-height: 100vh; /* Ensures the container height fills the entire screen height */
   padding-top: 48px;
 
   position: relative;

@@ -1,3 +1,4 @@
+import BottomNav from "components/BottomNav";
 import React, { useState, ChangeEvent } from "react";
 import styled from "styled-components";
 
@@ -65,6 +66,7 @@ function SettingPage() {
         </Label>
         <Button onClick={handleConfirmSave}>저장하기</Button>
       </FormContainer>
+      <BottomNav></BottomNav>
     </Container>
   );
 }

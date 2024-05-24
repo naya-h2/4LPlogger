@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import BottomNav from "components/BottomNav";
 
 function RankingPage() {
   const [rankings, setRankings] = useState([]);
@@ -115,6 +116,7 @@ function RankingPage() {
           </CloverCount>
         </RankingBox>
       </RankingList>
+      <BottomNav></BottomNav>
     </Container>
   );
 }
