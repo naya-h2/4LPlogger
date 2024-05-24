@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import BottomNav from "components/BottomNav";
 
 // Define the interface for the ranking data
 interface Ranking {
@@ -98,6 +99,7 @@ function HomePage() {
         <br />
         플로깅에 참여해보세요! 우리의 작은 실천이 지구를 깨끗하게 만듭니다.
       </PloggingArticle>
+      <BottomNav></BottomNav>
     </Container>
   );
 }
