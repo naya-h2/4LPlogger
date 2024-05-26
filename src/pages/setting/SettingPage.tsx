@@ -5,18 +5,23 @@ import styled from "styled-components";
 function SettingPage() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState(""); // 현재 비밀번호 상태 추가
   const [isChangingNickname, setIsChangingNickname] = useState(true); // True for changing nickname
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (isChangingNickname) {
       setNickname(event.target.value);
     } else {
-      setPassword(event.target.value);
+      if (event.target.name === "currentPassword") {
+        setCurrentPassword(event.target.value);
+      } else {
+        setPassword(event.target.value);
+      }
     }
   };
 
   const handleSave = async () => {
-    const data = isChangingNickname ? { nickname } : { password };
+    const data = isChangingNickname ? { nickname } : { currentPassword, password };
 
     try {
       const response = await fetch("http://localhost:8080/api/setting", {
@@ -53,11 +58,17 @@ function SettingPage() {
       <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
       <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
       <FormContainer>
-        <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "비밀번호"}</Label>
+        {!isChangingNickname && (
+          <>
+            <Label htmlFor="currentPassword">현재 비밀번호</Label>
+            <Input type="password" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호를 입력하세요." value={currentPassword} onChange={handleChange} />
+          </>
+        )}
+        <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "새 비밀번호"}</Label>
         <Input
           type={isChangingNickname ? "text" : "password"}
           id="inputField"
-          placeholder={isChangingNickname ? "닉네임을 입력하세요." : "비밀번호를 입력하세요."}
+          placeholder={isChangingNickname ? "닉네임을 입력하세요." : "새 비밀번호를 입력하세요."}
           value={isChangingNickname ? nickname : password}
           onChange={handleChange}
         />
@@ -66,7 +77,7 @@ function SettingPage() {
         </Label>
         <Button onClick={handleConfirmSave}>저장하기</Button>
       </FormContainer>
-      <BottomNav></BottomNav>
+      <BottomNav />
     </Container>
   );
 }
