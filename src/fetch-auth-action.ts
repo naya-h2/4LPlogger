@@ -6,8 +6,8 @@ type LoginFailType = { status: number; error: string };
 interface FetchData {
   method: string;
   url: string;
-  data?: {};
-  header: {};
+  data?: object;
+  header: object;
 }
 
 const fetchAuth = async (fetchData: FetchData) => {
@@ -51,22 +51,22 @@ const fetchAuth = async (fetchData: FetchData) => {
   }
 };
 
-const GET = (url: string, header: {}) => {
+const GET = (url: string, header: object) => {
   const response = fetchAuth({ method: "get", url, header });
   return response;
 };
 
-const POST = (url: string, data: {}, header: {}) => {
+const POST = (url: string, data: object, header: object) => {
   const response = fetchAuth({ method: "post", url, data, header });
   return response;
 };
 
-const PUT = async (url: string, data: {}, header: {}) => {
+const PUT = async (url: string, data: object, header: object) => {
   const response = fetchAuth({ method: "put", url, data, header });
   return response;
 };
 
-const DELETE = async (url: string, header: {}) => {
+const DELETE = async (url: string, header: object) => {
   const response = fetchAuth({ method: "delete", url, header });
   return response;
 };

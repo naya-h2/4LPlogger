@@ -1,42 +1,40 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthContext from "../../store/auth-context";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleEmailChange = (e: any) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e: any) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        // 로그인 성공
-        console.log("로그인 성공");
-        window.location.href = "/";
+      await authCtx.login(email, password);
+      if (authCtx.isSuccess) {
+        navigate("/", { replace: true });
       } else {
-        // 로그인 실패
         console.error("로그인 실패");
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.error("에러 발생:", error);
+      alert("로그인 중 에러가 발생했습니다. 다시 시도해주세요.");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -52,7 +50,9 @@ function LoginPage() {
         <InputContainer>
           <input type="password" placeholder=" 비밀번호" value={password} onChange={handlePasswordChange} />
         </InputContainer>
-        <Button type="submit">로그인</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? "로그인 중..." : "로그인"}
+        </Button>
       </Form>
 
       <SignupLink to="/signup">
@@ -124,7 +124,7 @@ const SignupText = styled.span`
 
   &:hover {
     border-bottom: 1px solid #54a300;
-  
+  }
 `;
 
 const Button = styled.button`

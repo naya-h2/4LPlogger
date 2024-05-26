@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import api from "../axios";
 import BottomNav from "components/BottomNav";
 
 // Define the interface for the ranking data
@@ -15,7 +16,7 @@ function HomePage() {
   useEffect(() => {
     // Fetch rankings from the backend
     axios
-      .get<Ranking[]>("http://localhost:8080/rankings") // Replace with your actual backend URL
+      .get<Ranking[]>(`${api.defaults.baseURL}auth/rankings`) // Replace with your actual backend URL
       .then((response) => {
         setRankings(response.data);
       })
@@ -26,7 +27,7 @@ function HomePage() {
 
   const fetchCloverCount = () => {
     axios
-      .get<number>("http://localhost:8080/cloverCount") // Replace with your actual backend URL for fetching clover count
+      .get<number>(`${api.defaults.baseURL}auth/cloverCount`) // Replace with your actual backend URL for fetching clover count
       .then((response) => {
         setCloverCount(response.data);
         alert(`현재 클로버 개수는 ${response.data}개 입니다.`);
