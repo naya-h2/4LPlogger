@@ -33,30 +33,30 @@ const BottomNav: React.FC = () => {
     <Wrapper>
       <NavLink to="/" onClick={() => setActiveNav(1)}>
         <ButtonContainer>
-          <NavItem src="/nav-home.svg" alt="Home" active={activeNav === 1} />
+          <NavItem src="/nav-home.svg" alt="Home" active={activeNav === 1 ? "true" : "false"} />
           <NavText active={activeNav === 1}>홈</NavText>
         </ButtonContainer>
       </NavLink>
       <NavLink to="/ranking" onClick={() => setActiveNav(2)}>
         <ButtonContainer>
-          <NavItem src="/nav-rank.svg" alt="Rank" active={activeNav === 2} />
+          <NavItem src="/nav-rank.svg" alt="Rank" active={activeNav === 2 ? "true" : "false"} />
           <NavText active={activeNav === 2}>랭킹</NavText>
         </ButtonContainer>
       </NavLink>
       <RunButtonLink to="/goal" onClick={() => setActiveNav(5)}>
         <RunButtonContainer>
-          <RunButton src="/RunButton.png" alt="Goal" active={activeNav === 5} />
+          <RunButton src="/RunButton.png" alt="Goal" active={activeNav === 5 ? "true" : "false"} />
         </RunButtonContainer>
       </RunButtonLink>
       <NavLink to="/calendar" onClick={() => setActiveNav(3)}>
         <ButtonContainer>
-          <NavItem src="/nav-calendar.svg" alt="Calendar" active={activeNav === 3} />
+          <NavItem src="/nav-calendar.svg" alt="Calendar" active={activeNav === 3 ? "true" : "false"} />
           <NavText active={activeNav === 3}>내 기록</NavText>
         </ButtonContainer>
       </NavLink>
       <NavLink to="/setting" onClick={() => setActiveNav(4)}>
         <ButtonContainer>
-          <NavItem src="/nav-info.svg" alt="Info" active={activeNav === 4} />
+          <NavItem src="/nav-info.svg" alt="Info" active={activeNav === 4 ? "true" : "false"} />
           <NavText active={activeNav === 4}>내 정보</NavText>
         </ButtonContainer>
       </NavLink>
@@ -111,18 +111,18 @@ const RunButtonContainer = styled.div`
   height: 100%;
 `;
 
-const RunButton = styled.img<{ active: boolean }>`
+const RunButton = styled.img<{ active: string }>`
   width: 100px; /* Increased size */
   height: 100px; /* Increased size */
-  filter: ${({ active }) => (active ? "brightness(0.9)" : "brightness(1)")}; /* Adjust brightness */
+  filter: ${({ active }) => (active === "true" ? "brightness(0.9)" : "brightness(1)")}; /* Adjust brightness */
   border: 3px solid #54a300;
   background-color: #ffffff;
   border-radius: 50%;
 `;
 
-const NavItem = styled.img<{ active: boolean }>`
+const NavItem = styled.img<{ active: string }>`
   filter: ${({ active }) =>
-    active
+    active === "true"
       ? "invert(38%) sepia(89%) saturate(530%) hue-rotate(85deg) brightness(92%) contrast(92%)"
       : "invert(46%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(95%) contrast(89%)"};
   width: 24px;

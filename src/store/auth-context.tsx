@@ -17,12 +17,24 @@ const AuthContext = React.createContext({
   isLoggedIn: false,
   isSuccess: false,
   isGetSuccess: false,
-  signup: (email: string, password: string, nickname: string) => {},
-  login: (email: string, password: string) => {},
-  logout: () => {},
-  getUser: () => {},
-  changeNickname: (nickname: string) => {},
-  changePassword: (exPassword: string, newPassword: string) => {},
+  signup: (email: string, password: string, nickname: string) => {
+    console.warn("signup method not implemented");
+  },
+  login: (email: string, password: string) => {
+    console.warn("login method not implemented");
+  },
+  logout: () => {
+    console.warn("logout method not implemented");
+  },
+  getUser: () => {
+    console.warn("getUser method not implemented");
+  },
+  changeNickname: (nickname: string) => {
+    console.warn("changeNickname method not implemented");
+  },
+  changePassword: (exPassword: string, newPassword: string) => {
+    console.warn("changePassword method not implemented");
+  },
 });
 
 export const AuthContextProvider: React.FC<Props> = (props) => {

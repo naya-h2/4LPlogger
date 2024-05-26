@@ -10,9 +10,13 @@ import RankingPage from "pages/ranking/RankingPage";
 import ScorePage from "pages/score/ScorePage";
 import SettingPage from "pages/setting/SettingPage";
 import SignupPage from "pages/signup/SignupPage";
-import { Route, Routes } from "react-router-dom";
+
+import React, { useContext } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import AuthContext from "./store/auth-context";
 
 function App() {
+  const authCtx = useContext(AuthContext);
   return (
     <MobileLayout>
       <Routes>
@@ -20,6 +24,9 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/setting" element={<SettingPage />} />
+        <Route path="/signup" element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignupPage />} />
+        <Route path="/login" element={authCtx.isLoggedIn ? <Navigate to="/" /> : <LoginPage />} />
+        <Route path="/setting" element={!authCtx.isLoggedIn ? <Navigate to="/" /> : <SettingPage />} />
         <Route path="/ranking" element={<RankingPage />} />
         <Route path="/goal" element={<GoalPage />} />
         <Route path="/plogging" element={<PloggingPage />} />

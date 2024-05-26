@@ -1,5 +1,5 @@
 import { GET, POST } from "../fetch-auth-action";
-
+import api from "../pages/axios";
 const createTokenHeader = (token: string) => {
   return {
     headers: {
@@ -42,7 +42,7 @@ export const retrieveStoredToken = () => {
 };
 
 export const signupActionHandler = (email: string, password: string, nickname: string) => {
-  const URL = "/auth/signup";
+  const URL = `${api.defaults.baseURL}auth/signup`;
   const signupObject = { email, password, nickname };
 
   const response = POST(URL, signupObject, {});
@@ -50,7 +50,7 @@ export const signupActionHandler = (email: string, password: string, nickname: s
 };
 
 export const loginActionHandler = (email: string, password: string) => {
-  const URL = "/auth/login";
+  const URL = `${api.defaults.baseURL}auth/login`;
   const loginObject = { email, password };
   const response = POST(URL, loginObject, {});
 
@@ -63,13 +63,13 @@ export const logoutActionHandler = () => {
 };
 
 export const getUserActionHandler = (token: string) => {
-  const URL = "/member/me";
+  const URL = `${api.defaults.baseURL}member/me`;
   const response = GET(URL, createTokenHeader(token));
   return response;
 };
 
 export const changeNicknameActionHandler = (nickname: string, token: string) => {
-  const URL = "/member/nickname";
+  const URL = `${api.defaults.baseURL}member/nickname`;
   const changeNicknameObj = { nickname };
   const response = POST(URL, changeNicknameObj, createTokenHeader(token));
 
@@ -77,7 +77,7 @@ export const changeNicknameActionHandler = (nickname: string, token: string) => 
 };
 
 export const changePasswordActionHandler = (exPassword: string, newPassword: string, token: string) => {
-  const URL = "/member/password";
+  const URL = `${api.defaults.baseURL}member/password`;
   const changePasswordObj = { exPassword, newPassword };
   const response = POST(URL, changePasswordObj, createTokenHeader(token));
   return response;

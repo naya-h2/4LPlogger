@@ -1,12 +1,16 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 import axios from "axios";
 
 function SignupPage() {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -20,19 +24,18 @@ function SignupPage() {
   };
 
   const handleSignup = async () => {
+    setIsLoading(true); // 로딩 시작
     try {
-      const response = await axios.post("http://localhost:8080/signup", {
-        nickname,
-        email,
-        password,
-      });
-      console.log("가입 성공:", response.data);
-      window.location.href = "/";
-      // 페이지 이동 또는 성공 메시지 처리 등
+      await authCtx.signup(email, password, nickname);
+
+      if (authCtx.isSuccess) {
+        navigate("/", { replace: true });
+      }
     } catch (error) {
       console.error("가입 오류:", error);
       // 오류 처리 로직 추가
     }
+    setIsLoading(false); // 로딩 종료
   };
 
   return (
@@ -61,7 +64,9 @@ function SignupPage() {
         >
           닉네임은 10글자 이하로 설정해주세요.
         </Label>
-        <Button onClick={handleSignup}>가입하기</Button>
+        <Button onClick={handleSignup} disabled={isLoading}>
+          {isLoading ? "가입 중..." : "가입하기"}
+        </Button>
         <LoginLink to="/login">
           <span>이미 가입하셨나요? </span>
           <LoginText>로그인 하기</LoginText>
