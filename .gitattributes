@@ -1,0 +1,6 @@
+# 모든 텍스트 파일에 대해 LF 줄바꿈을 강제 설정
+* text=auto eol=lf
+
+# 특정 파일 확장자에 대해 LF 줄바꿈을 강제 설정
+*.ts text eol=lf
+*.tsx text eol=lf
