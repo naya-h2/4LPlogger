@@ -33,31 +33,31 @@ const BottomNav: React.FC = () => {
     <Wrapper>
       <NavLink to="/" onClick={() => setActiveNav(1)}>
         <ButtonContainer>
-          <NavItem src="/nav-home.svg" alt="Home" active={activeNav === 1 ? "true" : "false"} />
-          <NavText active={activeNav === 1}>홈</NavText>
+          <NavItem src="/nav-home.svg" alt="Home" isActive={activeNav === 1} />
+          <NavText isActive={activeNav === 1}>홈</NavText>
         </ButtonContainer>
       </NavLink>
       <NavLink to="/ranking" onClick={() => setActiveNav(2)}>
         <ButtonContainer>
-          <NavItem src="/nav-rank.svg" alt="Rank" active={activeNav === 2 ? "true" : "false"} />
-          <NavText active={activeNav === 2}>랭킹</NavText>
+          <NavItem src="/nav-rank.svg" alt="Rank" isActive={activeNav === 2} />
+          <NavText isActive={activeNav === 2}>랭킹</NavText>
         </ButtonContainer>
       </NavLink>
       <RunButtonLink to="/goal" onClick={() => setActiveNav(5)}>
         <RunButtonContainer>
-          <RunButton src="/RunButton.png" alt="Goal" active={activeNav === 5 ? "true" : "false"} />
+          <RunButton src="/RunButton.png" alt="Goal" isActive={activeNav === 5} />
         </RunButtonContainer>
       </RunButtonLink>
       <NavLink to="/calendar" onClick={() => setActiveNav(3)}>
         <ButtonContainer>
-          <NavItem src="/nav-calendar.svg" alt="Calendar" active={activeNav === 3 ? "true" : "false"} />
-          <NavText active={activeNav === 3}>내 기록</NavText>
+          <NavItem src="/nav-calendar.svg" alt="Calendar" isActive={activeNav === 3} />
+          <NavText isActive={activeNav === 3}>내 기록</NavText>
         </ButtonContainer>
       </NavLink>
       <NavLink to="/setting" onClick={() => setActiveNav(4)}>
         <ButtonContainer>
-          <NavItem src="/nav-info.svg" alt="Info" active={activeNav === 4 ? "true" : "false"} />
-          <NavText active={activeNav === 4}>내 정보</NavText>
+          <NavItem src="/nav-info.svg" alt="Info" isActive={activeNav === 4} />
+          <NavText isActive={activeNav === 4}>내 정보</NavText>
         </ButtonContainer>
       </NavLink>
     </Wrapper>
@@ -111,26 +111,26 @@ const RunButtonContainer = styled.div`
   height: 100%;
 `;
 
-const RunButton = styled.img<{ active: string }>`
+const RunButton = styled.img<{ isActive: boolean }>`
   width: 100px; /* Increased size */
   height: 100px; /* Increased size */
-  filter: ${({ active }) => (active === "true" ? "brightness(0.9)" : "brightness(1)")}; /* Adjust brightness */
+  filter: ${({ isActive }) => (isActive ? "brightness(0.9)" : "brightness(1)")}; /* Adjust brightness */
   border: 3px solid #54a300;
   background-color: #ffffff;
   border-radius: 50%;
 `;
 
-const NavItem = styled.img<{ active: string }>`
-  filter: ${({ active }) =>
-    active === "true"
+const NavItem = styled.img<{ isActive: boolean }>`
+  filter: ${({ isActive }) =>
+    isActive
       ? "invert(38%) sepia(89%) saturate(530%) hue-rotate(85deg) brightness(92%) contrast(92%)"
       : "invert(46%) sepia(0%) saturate(0%) hue-rotate(3deg) brightness(95%) contrast(89%)"};
   width: 24px;
   height: 24px;
 `;
 
-const NavText = styled.span<{ active: boolean }>`
-  color: ${({ active }) => (active ? "#54A300" : "#777777")}; /* Change color based on active state */
+const NavText = styled.span<{ isActive: boolean }>`
+  color: ${({ isActive }) => (isActive ? "#54A300" : "#777777")}; /* Change color based on active state */
   font-size: 18px;
   text-decoration: none; /* Ensure no underline */
 `;
