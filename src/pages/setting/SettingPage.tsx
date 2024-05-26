@@ -111,7 +111,7 @@ const FormContainer = styled.div`
 
 const Label = styled.label`
   display: block;
-  margin-top: 10px;
+  margin-top: 20px;
   color: #000000;
   font-weight: bold;
 `;
