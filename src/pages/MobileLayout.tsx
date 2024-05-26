@@ -1,3 +1,4 @@
+import BottomNav from "components/BottomNav";
 import Header from "components/Header";
 import { IS_HEADER } from "constants/layout";
 import { ReactNode } from "react";

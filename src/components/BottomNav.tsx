@@ -77,6 +77,14 @@ const Wrapper = styled.nav`
   display: flex; /* Use flexbox to distribute items evenly */
   justify-content: space-between;
   align-items: center;
+
+  width: 100%;
+  min-width: 320px;
+
+  @media (min-width: 480px) {
+    margin: 0 auto;
+    width: 480px;
+  }
 `;
 
 const NavLink = styled(Link)`
@@ -135,4 +143,4 @@ const NavText = styled.span<{ isActive: boolean }>`
   text-decoration: none; /* Ensure no underline */
 `;
 
-export default BottomNav;
+export default styled(BottomNav)``;

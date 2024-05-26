@@ -1,12 +1,21 @@
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import AuthContext from "../../store/auth-context";
 
 function Dropdown() {
   const navigate = useNavigate();
+  const authCtx = useContext(AuthContext);
+
+  const handleLogout = () => {
+    authCtx.logout();
+    navigate("/login"); // 로그아웃 후 로그인 페이지로 리디렉션
+  };
+
   return (
     <Box>
       <List onClick={() => navigate("/setting")}>계정설정</List>
-      <List>로그아웃</List>
+      <List onClick={handleLogout}>로그아웃</List>
     </Box>
   );
 }
