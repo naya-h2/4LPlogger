@@ -14,7 +14,7 @@ function Dropdown() {
 
   return (
     <Box>
-      <List onClick={() => navigate("/setting")}>계정설정</List>
+      <List onClick={() => navigate("/setting")}>내 정보</List>
       <List onClick={handleLogout}>로그아웃</List>
     </Box>
   );
