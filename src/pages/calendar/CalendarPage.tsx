@@ -8,11 +8,32 @@ import { format } from "date-fns";
 import arrowLeft from "assets/icon/arrow-left_md.svg";
 import arrowRight from "assets/icon/arrow-right_md.svg";
 import "styles/customCalendar.css";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 function CalendarPage() {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<any>(today);
   const [month, setMonth] = useState(format(today, "yyyy-MM"));
+
+  const { data, refetch } = useQuery({
+    queryKey: ["month", month],
+    queryFn: async () => {
+      const res = await fetch("/clover");
+
+      // const res = await fetch("/post", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     date: "2024-05-28",
+      //     goalDistance: 5.0,
+      //     distance: 2.8,
+      //     time: "00:30:28",
+      //     image: "https://i.namu.wiki/i/1RiO1dwwtXVFZu4PbcaE1CbErlkp2AOYNIgNJvhXbByjCuElwK712dWrDCTyl9xu9oTnGMz_axb0CKqnVJ8y9w.webp",
+      //     status: "sucess",
+      //   }),
+      // });
+    },
+  });
 
   // useEffect(() => {
   //   refetch();
@@ -41,7 +62,7 @@ function CalendarPage() {
   };
 
   return (
-    <>
+    <Container>
       <Title>플로깅 기록을 모아보세요</Title>
       <Clover>
         <Icon src={cloverIcon} />: 111
@@ -72,11 +93,15 @@ function CalendarPage() {
         }}
       />
       <CardWrapper>{MONTH.map((data) => (data.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={data.id} data={data} /> : null))}</CardWrapper>
-    </>
+    </Container>
   );
 }
 
 export default CalendarPage;
+
+const Container = styled.div`
+  padding: 16px;
+`;
 
 const Title = styled.div`
   padding: 16px 0;
