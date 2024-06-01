@@ -1,7 +1,7 @@
+import AuthContext from "api/auth-context";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AuthContext from "../../store/auth-context";
 
 function Dropdown() {
   const navigate = useNavigate();

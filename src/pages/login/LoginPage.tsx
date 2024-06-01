@@ -1,7 +1,7 @@
+import AuthContext from "api/auth-context";
 import React, { useState, useContext } from "react";
 import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import AuthContext from "../../store/auth-context";
 
 function LoginPage() {
   const [email, setEmail] = useState("");

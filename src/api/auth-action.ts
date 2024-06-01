@@ -1,5 +1,5 @@
-import { GET, POST } from "../fetch-auth-action";
-import api from "../pages/axios";
+import { GET, POST } from "./fetch-auth-action";
+import api from "./axios";
 const createTokenHeader = (token: string) => {
   return {
     headers: {

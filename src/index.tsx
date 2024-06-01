@@ -3,8 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthContextProvider } from "./store/auth-context";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthContextProvider } from "api/auth-context";
 
 const queryClient = new QueryClient();
 

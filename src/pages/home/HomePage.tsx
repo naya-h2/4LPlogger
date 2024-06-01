@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import api from "../axios";
+import api from "../../api/axios";
 import BottomNav from "components/BottomNav";
 
 // Define the interface for the ranking data

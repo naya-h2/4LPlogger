@@ -1,3 +1,4 @@
+import AuthContext from "api/auth-context";
 import MobileLayout from "pages/MobileLayout";
 import NotFoundPage from "pages/NotFoundPage";
 import CalendarPage from "pages/calendar/CalendarPage";
@@ -11,9 +12,8 @@ import ScorePage from "pages/score/ScorePage";
 import SettingPage from "pages/setting/SettingPage";
 import SignupPage from "pages/signup/SignupPage";
 
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import AuthContext from "./store/auth-context";
 
 function App() {
   const authCtx = useContext(AuthContext);

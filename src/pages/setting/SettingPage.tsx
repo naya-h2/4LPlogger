@@ -2,7 +2,7 @@ import BottomNav from "components/BottomNav";
 import React, { useState, ChangeEvent, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "api/auth-context";
 
 function SettingPage() {
   const [nickname, setNickname] = useState("");
