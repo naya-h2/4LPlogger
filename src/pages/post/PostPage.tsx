@@ -9,6 +9,8 @@ import { calcTime } from "utils/calcTime";
 import { useNavigate } from "react-router-dom";
 import { TRASH } from "assets/data/trash";
 import { distance } from "utils/calcDistance";
+import api from "api/axios";
+import { format } from "date-fns";
 
 const MINIMUM = 0.01;
 
@@ -24,8 +26,20 @@ function PostPage() {
     setImgUrl(URL.createObjectURL(event.target.files[0]));
   };
 
-  const handlePostClick = () => {
-    //post API 요청할 곳
+  const handlePostClick = async () => {
+    const res = await api.post("/post", {
+      date: format(today, "yyyy-MM-dd"),
+      time: calcTime(time),
+      distance: Number(km),
+      goalDistance: Number(localStorage.getItem("goal")),
+      imageURL: "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2023/05/PS23052200142.jpg",
+      isSuccessful: "success",
+    });
+
+    const { clovers, score } = res.data;
+    localStorage.setItem("score", score);
+    localStorage.setItem("curCloverNum", clovers);
+
     navigate("/score");
   };
 
