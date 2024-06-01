@@ -68,7 +68,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   const loginHandler = (email: string, password: string) => {
     setIsSuccess(false);
-    console.log(isSuccess);
+    // console.log(isSuccess);
 
     const data = authAction.loginActionHandler(email, password);
     data.then((result: any) => {
@@ -77,7 +77,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
         setToken(loginData.accessToken);
         logoutTimer = setTimeout(logoutHandler, authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn));
         setIsSuccess(true);
-        console.log(isSuccess);
+        // console.log(isSuccess);
       }
     });
   };
@@ -95,7 +95,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     const data = authAction.getUserActionHandler(token);
     data.then((result: any) => {
       if (result !== null) {
-        console.log("get user start!");
+        // console.log("get user start!");
         const userData: UserInfo = result.data;
         setUserObj(userData);
         setIsGetSuccess(true);
@@ -129,7 +129,7 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
 
   useEffect(() => {
     if (tokenData) {
-      console.log(tokenData.duration);
+      // console.log(tokenData.duration);
       logoutTimer = setTimeout(logoutHandler, tokenData.duration);
     }
   }, [tokenData, logoutHandler]);
