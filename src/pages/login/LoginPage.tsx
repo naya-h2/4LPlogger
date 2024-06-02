@@ -17,15 +17,15 @@ function LoginPage() {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
     try {
       await authCtx.login(email, password);
+
       if (authCtx.isSuccess) {
-        navigate("/", { replace: true });
+        navigate("/", { replace: true }); // 현재 페이지를 새로운 페이지로 교체
       }
     } catch (error) {
       console.error("에러 발생:", error);

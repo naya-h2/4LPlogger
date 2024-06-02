@@ -29,7 +29,7 @@ function SignupPage() {
       await authCtx.signup(email, password, nickname);
 
       if (authCtx.isSuccess) {
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       }
     } catch (error) {
       // console.error("가입 오류:", error);

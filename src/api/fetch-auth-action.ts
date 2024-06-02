@@ -56,8 +56,8 @@ const GET = (url: string, header: object) => {
   return response;
 };
 
-const POST = (url: string, data: object, header: object) => {
-  const response = fetchAuth({ method: "post", url, data, header });
+const POST = async (url: string, data: object, header: object) => {
+  const response = await fetchAuth({ method: "post", url, data, header });
   return response;
 };
 
