@@ -29,30 +29,30 @@ function RankingPage() {
       .then((response) => {
         const myInfo = response.data as myRanking;
         setMyNickname(myInfo.nickname); // 나의 닉네임 설정
+
+        // 상위 랭킹 정보를 가져옴
+        api
+          .get("/api/members/top?count=30")
+          .then((response) => {
+            const fetchedRankings = response.data as Ranking[];
+            setRankings(fetchedRankings);
+
+            // 나의 닉네임을 기준으로 나의 순위를 찾음
+            const myRanking = fetchedRankings.find((r) => r.nickname === myNickname);
+            if (myRanking) {
+              setMyNickname(myRanking.nickname);
+              setMyRank(myRanking.rank);
+              setMyScore(myRanking.clovers);
+            }
+          })
+          .catch((error) => {
+            console.error("There was an error fetching the rankings!", error);
+          });
       })
       .catch((error) => {
         console.error("There was an error fetching my nickname!", error);
       });
-
-    // 상위 랭킹 정보를 가져옴
-    api
-      .get("/api/members/top?count=30")
-      .then((response) => {
-        const fetchedRankings = response.data as Ranking[];
-        setRankings(fetchedRankings);
-
-        // 나의 닉네임을 기준으로 나의 순위를 찾음
-        const myRanking = fetchedRankings.find((r) => r.nickname === myNickname);
-        if (myRanking) {
-          setMyNickname(myRanking.nickname);
-          setMyRank(myRanking.rank);
-          setMyScore(myRanking.clovers);
-        }
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the rankings!", error);
-      });
-  }, [myNickname]);
+  }, []);
 
   return (
     <Container>

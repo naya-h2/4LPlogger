@@ -24,9 +24,7 @@ function LoginPage() {
     try {
       await authCtx.login(email, password);
 
-      if (authCtx.isSuccess) {
-        navigate("/");
-      }
+      navigate("/");
     } catch (error) {
       console.error("에러 발생:", error);
       alert("로그인 중 에러가 발생했습니다. 다시 시도해주세요.");
