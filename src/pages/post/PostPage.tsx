@@ -58,7 +58,7 @@ function PostPage() {
     }
 
     if (min === null) return;
-    // if (MINIMUM < min) return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!, ${min}`);
+    if (MINIMUM < min) return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!, ${min}`);
 
     //쓰레기통 위치 인증 성공
     const verify = await api.post("/flask", {
