@@ -1269,4 +1269,9 @@ export const TRASH = [
     latitude: 37.5736182,
     longitude: 126.8869088,
   },
+  {
+    index: 255,
+    latitude: 37.549861,
+    longitude: 126.941042,
+  },
 ];

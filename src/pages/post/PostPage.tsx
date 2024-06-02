@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import addIcon from "assets/icon/add-img.svg";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import useModal from "hooks/useModal";
 import PloggingModal from "components/Modal/PloggingModal";
 import BottomBtnLayout from "pages/BottomBtnLayout";
@@ -11,21 +11,24 @@ import { TRASH } from "assets/data/trash";
 import { distance } from "utils/calcDistance";
 import api from "api/axios";
 import { format } from "date-fns";
+import axios from "axios";
 
 const MINIMUM = 0.05;
 
 function PostPage() {
   const today = new Date();
-  const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
+  const [uploadUrl, setUploadUrl] = useState("");
+  const [curImg, setCurImg] = useState<File | null>(null);
   const [isVerify, setIsVerify] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { km, time, lastPosition } = JSON.parse(localStorage.getItem("ploggingResult") || "");
   const navigate = useNavigate();
 
-  const handleImgChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImgChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.length === 0 || !event.target.files) return;
     setImgUrl(URL.createObjectURL(event.target.files[0]));
+    setCurImg(event.target.files[0]);
   };
 
   const handlePostClick = async () => {
@@ -34,8 +37,8 @@ function PostPage() {
       time: calcTime(time),
       distance: Number(km),
       goalDistance: Number(localStorage.getItem("goal")),
-      imageURL: "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2023/05/PS23052200142.jpg",
-      isSuccessful: "success",
+      imageURL: uploadUrl,
+      isSuccessful: isVerify ? "success" : "fail",
     });
 
     const { clovers, score } = res.data;
@@ -45,8 +48,18 @@ function PostPage() {
     navigate("/score");
   };
 
+  const handleImgUpload = async () => {
+    const res = await api.get(`/presigned-url?filename=${curImg?.name}`);
+
+    const imgRes = await fetch(res.data, {
+      method: "PUT",
+      body: curImg,
+    });
+
+    setUploadUrl(imgRes.url.split("?")[0]);
+  };
+
   const handleVerifyClick = async () => {
-    setIsLoading(true);
     let min = null;
     for (const trash of TRASH) {
       const dst = distance(trash.latitude, trash.longitude, lastPosition.latitude, lastPosition.longitude);
@@ -58,16 +71,29 @@ function PostPage() {
     }
 
     if (min === null) return;
-    if (MINIMUM < min) return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!, ${min}`);
+    if (MINIMUM < min) {
+      setIsLoading(false);
+      return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!\n인증에 실패하면 클로버를 받을 수 없어요.`);
+    }
 
-    //쓰레기통 위치 인증 성공
+    alert("🍀 쓰레기통 위치 인증 성공!\n이미지 인증을 진행할게요.");
+    handleImgUpload();
+  };
+
+  const postFlask = async () => {
     const verify = await api.post("/flask", {
-      image: "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2023/05/PS23052200142.jpg",
+      image: uploadUrl,
     });
 
-    console.log(verify.data.result === "sucess");
-    setIsVerify(verify.data.result === "sucess" ? true : false);
+    alert(`사진 인증 결과\n[ ${verify.data.result} ]`);
+
+    setIsVerify(verify.data.result === "success" ? true : false);
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (uploadUrl) postFlask();
+  }, [uploadUrl]);
 
   return (
     <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기" btnClickFunc={handlePostClick} disabled={isLoading}>
@@ -84,16 +110,16 @@ function PostPage() {
         </ResultWrapper>
         <Button
           onClick={() => {
+            setIsLoading(true);
             handleVerifyClick();
-            setIsLoading(false);
           }}
-          disabled={isVerify || isLoading}
+          disabled={isVerify || isLoading || !imgUrl}
+          $disabled={isVerify || isLoading || !imgUrl}
         >
-          {isLoading ? "인증중..." : isVerify ? "인증완료" : "인증하기"}
+          {isLoading ? "인증하는 중.." : isVerify ? "인증완료" : "인증하기"}
         </Button>
         플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
       </CardContainer>
-      {isOpen && <PloggingModal hideModal={handleModalClose} />}
     </BottomBtnLayout>
   );
 }
@@ -122,8 +148,18 @@ const DateWrapper = styled.div`
   font-weight: 700;
 `;
 
-const Button = styled.button`
+const disabledButton = css`
+  background-color: #d9d9d9;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #d9d9d9;
+  }
+`;
+
+const Button = styled.button<{ $disabled: boolean }>`
   margin-top: 20px;
+  ${({ $disabled }) => ($disabled ? disabledButton : null)};
 `;
 
 const ResultWrapper = styled.div`
