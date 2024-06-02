@@ -60,10 +60,14 @@ function PostPage() {
     if (min === null) return;
     if (MINIMUM < min) return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!, ${min}`);
 
+    alert("쓰레기통 위치 인증 성공!");
+
     //쓰레기통 위치 인증 성공
     const verify = await api.post("/flask", {
       image: "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2023/05/PS23052200142.jpg",
     });
+
+    alert(`사진 인증 결과: ${verify.data.result}`);
 
     console.log(verify.data.result === "sucess");
     setIsVerify(verify.data.result === "sucess" ? true : false);
