@@ -94,17 +94,13 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     }
   }, []);
 
-  const getUserHandler = () => {
+  const getUserHandler = async () => {
     setIsGetSuccess(false);
-    const data = authAction.getUserActionHandler(token);
-    data.then((result: any) => {
-      if (result !== null) {
-        // console.log("get user start!");
-        const userData: UserInfo = result.data;
-        setUserObj(userData);
-        setIsGetSuccess(true);
-      }
-    });
+    const res = await authAction.getUserActionHandler(token);
+    if (res !== null) {
+      const userData: UserInfo = res.data;
+      setUserObj(userData);
+    }
   };
 
   const changeNicknameHandler = (nickname: string) => {

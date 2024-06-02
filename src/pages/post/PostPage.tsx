@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import addIcon from "assets/icon/add-img.svg";
 import { ChangeEvent, useEffect, useState } from "react";
-import useModal from "hooks/useModal";
-import PloggingModal from "components/Modal/PloggingModal";
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import ScoreBox from "components/ScoreBox";
 import { calcTime } from "utils/calcTime";
@@ -11,7 +9,6 @@ import { TRASH } from "assets/data/trash";
 import { distance } from "utils/calcDistance";
 import api from "api/axios";
 import { format } from "date-fns";
-import axios from "axios";
 
 const MINIMUM = 0.05;
 
@@ -44,6 +41,8 @@ function PostPage() {
     const { clovers, score } = res.data;
     localStorage.setItem("score", score);
     localStorage.setItem("curCloverNum", clovers);
+
+    setIsLoading(false);
 
     navigate("/score");
   };
@@ -96,7 +95,15 @@ function PostPage() {
   }, [uploadUrl]);
 
   return (
-    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기" btnClickFunc={handlePostClick} disabled={isLoading}>
+    <BottomBtnLayout
+      titleText="플로깅을 완료했어요✨"
+      btnText="기록하기"
+      btnClickFunc={() => {
+        setIsLoading(true);
+        handlePostClick();
+      }}
+      disabled={isLoading}
+    >
       <CardContainer>
         <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
         쓰레기 사진을 찍어 플로깅을 인증하세요.
