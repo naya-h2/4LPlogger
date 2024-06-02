@@ -27,6 +27,7 @@ function RecordCard({ data }: Props) {
 export default RecordCard;
 
 const Container = styled.div`
+  width: 100%;
   height: 88px;
   padding: 5px 10px;
 

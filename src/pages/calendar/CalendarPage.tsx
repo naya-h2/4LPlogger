@@ -3,7 +3,7 @@ import styled from "styled-components";
 import cloverIcon from "assets/icon/logo-run.svg";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import { format, formatDate } from "date-fns";
+import { format } from "date-fns";
 import arrowLeft from "assets/icon/arrow-left_md.svg";
 import arrowRight from "assets/icon/arrow-right_md.svg";
 import "styles/customCalendar.css";
@@ -16,11 +16,15 @@ function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState<any>(today);
   const [month, setMonth] = useState(format(today, "yyyy-MM"));
   const [clover, setClover] = useState(0);
+  const [todayData, setTodayData] = useState<any>([]);
 
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ["month", month],
     queryFn: async () => {
       const res = await axios.post("/monthly", { date: `${month}-01` });
+      let arr = [] as any[];
+      res.data.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? arr.push(plogging) : null));
+      setTodayData(arr);
       return res.data;
     },
   });
@@ -38,10 +42,6 @@ function CalendarPage() {
     refetch();
   }, [month]);
 
-  const handleDateChange = (newDate: Date) => {
-    setSelectedDate(newDate);
-  };
-
   const handleNextMonthClick = () => {
     const [yyyy, mm] = month.split("-");
     if (mm === "12") return setMonth(Number(yyyy) + 1 + "-" + "01");
@@ -56,6 +56,14 @@ function CalendarPage() {
     setMonth(format(yyyy + "-" + newMonth, "yyyy-MM"));
   };
 
+  console.log(data);
+
+  useEffect(() => {
+    if (data?.length > 0) {
+      data.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? setTodayData((prev: any) => [...prev, plogging]) : null));
+    }
+  }, [selectedDate]);
+
   return (
     <Container>
       <Title>플로깅 기록을 모아보세요</Title>
@@ -66,6 +74,7 @@ function CalendarPage() {
       <Calendar
         value={selectedDate}
         onChange={(date) => {
+          setTodayData([]);
           setSelectedDate(date);
         }}
         onClickMonth={(date) => setMonth(format(date, "yyyy-MM"))}
@@ -82,14 +91,20 @@ function CalendarPage() {
         tileContent={({ date, view }) => {
           const curDate = format(date, "yyyy-MM-dd");
           if (!data) return null;
+          let tile = null;
           for (const plogging of data) {
-            if (plogging.date === curDate) return <ImgTile src={plogging.imageURL} />;
+            if (plogging.date === curDate) tile = <ImgTile src={plogging.imageURL} />;
           }
-          return null;
+          return tile;
         }}
       />
+      <Guide>가장 마지막 기록의 인증 사진이 썸네일이 됩니다.</Guide>
       {isSuccess && (
-        <CardWrapper>{data.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={plogging.id} data={plogging} /> : null))}</CardWrapper>
+        <CardWrapper>
+          {todayData?.length === 0
+            ? "기록 데이터가 없습니다."
+            : todayData.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={plogging.imageURL} data={plogging} /> : null))}
+        </CardWrapper>
       )}
     </Container>
   );
@@ -145,5 +160,12 @@ const ImgTile = styled.img`
 const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 8px;
+`;
+
+const Guide = styled.p`
+  font-size: 12px;
+  color: #c4c4c4;
+  margin-bottom: 12px;
 `;
