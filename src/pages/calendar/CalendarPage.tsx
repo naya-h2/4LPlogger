@@ -20,7 +20,7 @@ function CalendarPage() {
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ["month", month],
     queryFn: async () => {
-      const res = await axios.post("/monthly", { date: formatDate(today, "yyyy-MM-dd") });
+      const res = await axios.post("/monthly", { date: `${month}-01` });
       return res.data;
     },
   });
