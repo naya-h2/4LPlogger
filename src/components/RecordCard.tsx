@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import ScoreBox from "./ScoreBox";
-import { calcTime } from "utils/calcTime";
 
 interface Props {
   data: {
     date: string;
-    goal: number;
+    goalDistance: number;
     distance: number;
-    time: number;
+    time: string;
     imgSrc?: string;
   };
 }
@@ -17,9 +16,9 @@ function RecordCard({ data }: Props) {
     <Container>
       {data.date}
       <ScoreWrapper>
-        <ScoreBox category="목표(km)" value={`${data.goal}`} isSmall />
+        <ScoreBox category="목표(km)" value={`${data.goalDistance}`} isSmall />
         <ScoreBox category="km" value={`${data.distance}`} isSmall />
-        <ScoreBox category="시간" value={calcTime(data.time)} isSmall />
+        <ScoreBox category="시간" value={data.time} isSmall />
       </ScoreWrapper>
     </Container>
   );

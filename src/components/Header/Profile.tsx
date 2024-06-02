@@ -1,15 +1,36 @@
 import { USER } from "constants/mockup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
+import api from "api/axios";
 
 function Profile() {
-  const { profileUrl, nickName } = USER;
+  const [isLogin, setIsLogin] = useState(false);
+  const [nickName, setNickName] = useState("");
+  // const { profileUrl, nickName } = USER;
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLogin(true);
+    }
+  }, []);
+
+  const getNickName = async () => {
+    // const res = await api.get("/member/me");
+    // setNickName(res.data.nickname);
+  };
+
+  console.log(nickName);
+  console.log(isLogin);
+
+  useEffect(() => {
+    getNickName();
+  }, [isLogin]);
 
   return (
     <Wrapper>
-      <Img src={profileUrl} alt={nickName} onClick={() => setIsOpen((prev) => !prev)} />
+      <span onClick={() => setIsOpen((prev) => !prev)}>{isLogin ? nickName : "로그인"}</span>
       {isOpen && <Dropdown />}
     </Wrapper>
   );
