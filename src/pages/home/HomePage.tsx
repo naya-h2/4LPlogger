@@ -8,7 +8,7 @@ interface Ranking {
   nickname: string;
 }
 
-function RankingPage() {
+function HomePage() {
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [myRank, setMyRank] = useState<number | null>(null);
   const [myScore, setMyScore] = useState<number | null>(null);
@@ -76,7 +76,7 @@ function RankingPage() {
   );
 }
 
-export default RankingPage;
+export default HomePage;
 
 const Container = styled.div`
   margin-top: 20px;
@@ -88,7 +88,6 @@ const Container = styled.div`
 
 const TitleText = styled.div<{ second?: boolean }>`
   height: 24px;
-  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 25px;
