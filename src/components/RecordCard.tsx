@@ -17,7 +17,7 @@ function RecordCard({ data }: Props) {
       {data.date}
       <ScoreWrapper>
         <ScoreBox category="목표(km)" value={`${data.goalDistance}`} isSmall />
-        <ScoreBox category="km" value={`${data.distance}`} isSmall />
+        <ScoreBox category="km" value={`${data.distance.toFixed(4)}`} isSmall />
         <ScoreBox category="시간" value={data.time} isSmall />
       </ScoreWrapper>
     </Container>
