@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import BottomNav from "components/BottomNav";
+import api from "api/axios";
 
 interface Ranking {
   nickname: string;
@@ -12,30 +12,23 @@ function RankingPage() {
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [myRank, setMyRank] = useState<number | null>(null);
   const [myScore, setMyScore] = useState<number | null>(null);
+  const [myNickname, setMyNickname] = useState<string>("");
 
   useEffect(() => {
     // 나의 랭킹 정보를 가져옴
-    axios
+    api
       .get("/api/members/rank")
       .then((response) => {
-        setMyRank(response.data);
+        setMyRank(response.data.rank);
+        setMyScore(response.data.clovers);
+        setMyNickname(response.data.nickname); // 나의 닉네임 설정
       })
       .catch((error) => {
         console.error("There was an error fetching my rank!", error);
       });
 
-    // 나의 클로버 수를 가져옴
-    axios
-      .get("/api/members/score")
-      .then((response) => {
-        setMyScore(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching my score!", error);
-      });
-
     // 상위 랭킹 정보를 가져옴
-    axios
+    api
       .get("/api/members/top?count=30")
       .then((response) => {
         setRankings(response.data as Ranking[]);
@@ -50,13 +43,13 @@ function RankingPage() {
       <TitleWrapper>
         <Title>오늘의 랭킹🔥</Title>
       </TitleWrapper>
-      {/* <Line />
+      <Line />
       {myRank !== null && myScore !== null && (
         <MyRankingBox>
           <RankText>{myRank}</RankText>
           <ProfileImage src="/clover-profile.png" alt="Profile" />
           <Info>
-            <Nickname>플로깅팟팅</Nickname>
+            <Nickname>{myNickname}</Nickname> {/* 나의 닉네임 사용 */}
           </Info>
           <CloverCount>
             <CloverImage src="/clover-logo.svg" alt="Clover" />
@@ -74,11 +67,11 @@ function RankingPage() {
             </Info>
             <CloverCount>
               <CloverImage src="/clover-logo.svg" alt="Clover" />
-              {ranking.score}
+              {ranking.score} {/* 상위 30명의 클로버 갯수 표시 */}
             </CloverCount>
           </RankingBox>
         ))}
-      </RankingList> */}
+      </RankingList>
       <BottomNav />
     </Container>
   );
