@@ -4,14 +4,13 @@ import styled from "styled-components";
 import cloverIcon from "assets/icon/logo-run.svg";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import { format } from "date-fns";
+import { format, formatDate } from "date-fns";
 import arrowLeft from "assets/icon/arrow-left_md.svg";
 import arrowRight from "assets/icon/arrow-right_md.svg";
 import "styles/customCalendar.css";
 import { useQuery } from "react-query";
 import axios from "axios";
 import api from "api/axios";
-import AuthContext from "api/auth-context";
 
 function CalendarPage() {
   const today = new Date();
@@ -19,17 +18,15 @@ function CalendarPage() {
   const [month, setMonth] = useState(format(today, "yyyy-MM"));
   const [clover, setClover] = useState(0);
 
-  const { data, refetch } = useQuery({
+  const { data, refetch, isSuccess } = useQuery({
     queryKey: ["month", month],
     queryFn: async () => {
-      // const res = await api.get("/monthly", {
-      //   data: {
-      //     date: "2024-05-26",
-      //   },
-      // });
-      // console.log(res.data);
+      const res = await axios.post("/monthly", { date: formatDate(today, "yyyy-MM-dd") });
+      return res.data;
     },
   });
+
+  console.log(data);
 
   const getCloverNumber = async () => {
     const res = await api.get("/api/members/rank");
@@ -40,9 +37,9 @@ function CalendarPage() {
     getCloverNumber();
   }, []);
 
-  // useEffect(() => {
-  //   refetch();
-  // }, [month]);
+  useEffect(() => {
+    refetch();
+  }, [month]);
 
   // useEffect(() => {
   //   setDataList(data?.filter((item) => item.deadline === format(selectedDate, 'yyyy-MM-dd')));
@@ -76,7 +73,6 @@ function CalendarPage() {
       <Calendar
         value={selectedDate}
         onChange={(date) => {
-          console.log(date);
           setSelectedDate(date);
         }}
         onClickMonth={(date) => setMonth(format(date, "yyyy-MM"))}
@@ -92,13 +88,16 @@ function CalendarPage() {
         minDetail="year" // 10년단위 년도 숨기기
         tileContent={({ date, view }) => {
           const curDate = format(date, "yyyy-MM-dd");
-          for (const data of MONTH) {
-            if (data.date === curDate) return <ImgTile src={data.imgSrc} />;
+          if (!data) return null;
+          for (const plogging of data) {
+            if (plogging.date === curDate) return <ImgTile src={plogging.imgSrc} />;
           }
           return null;
         }}
       />
-      <CardWrapper>{MONTH.map((data) => (data.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={data.id} data={data} /> : null))}</CardWrapper>
+      {isSuccess && (
+        <CardWrapper>{data.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={plogging.id} data={plogging} /> : null))}</CardWrapper>
+      )}
     </Container>
   );
 }

@@ -12,12 +12,14 @@ import { distance } from "utils/calcDistance";
 import api from "api/axios";
 import { format } from "date-fns";
 
-const MINIMUM = 0.01;
+const MINIMUM = 0.05;
 
 function PostPage() {
   const today = new Date();
   const { isOpen, handleModalOpen, handleModalClose } = useModal();
   const [imgUrl, setImgUrl] = useState("");
+  const [isVerify, setIsVerify] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { km, time, lastPosition } = JSON.parse(localStorage.getItem("ploggingResult") || "");
   const navigate = useNavigate();
 
@@ -43,7 +45,8 @@ function PostPage() {
     navigate("/score");
   };
 
-  const handleVerifyClick = () => {
+  const handleVerifyClick = async () => {
+    setIsLoading(true);
     let min = null;
     for (const trash of TRASH) {
       const dst = distance(trash.latitude, trash.longitude, lastPosition.latitude, lastPosition.longitude);
@@ -54,13 +57,20 @@ function PostPage() {
       if (min > dst) min = dst;
     }
 
-    if (MINIMUM < (min || 1000)) return alert("⚠️ 쓰레기통 근처로 이동해서 인증해주세요!");
+    if (min === null) return;
+    // if (MINIMUM < min) return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!, ${min}`);
 
     //쓰레기통 위치 인증 성공
+    const verify = await api.post("/flask", {
+      image: "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2023/05/PS23052200142.jpg",
+    });
+
+    console.log(verify.data.result === "sucess");
+    setIsVerify(verify.data.result === "sucess" ? true : false);
   };
 
   return (
-    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기" btnClickFunc={handlePostClick}>
+    <BottomBtnLayout titleText="플로깅을 완료했어요✨" btnText="기록하기" btnClickFunc={handlePostClick} disabled={isLoading}>
       <CardContainer>
         <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
         쓰레기 사진을 찍어 플로깅을 인증하세요.
@@ -72,7 +82,15 @@ function PostPage() {
           <ScoreBox category="시간" value={calcTime(time)} />
           <ScoreBox category="km" value={km.toFixed(4)} />
         </ResultWrapper>
-        <Button onClick={handleVerifyClick}>인증하기</Button>
+        <Button
+          onClick={() => {
+            handleVerifyClick();
+            setIsLoading(false);
+          }}
+          disabled={isVerify || isLoading}
+        >
+          {isLoading ? "인증중..." : isVerify ? "인증완료" : "인증하기"}
+        </Button>
         플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
       </CardContainer>
       {isOpen && <PloggingModal hideModal={handleModalClose} />}
