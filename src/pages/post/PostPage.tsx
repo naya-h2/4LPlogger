@@ -102,7 +102,7 @@ function PostPage() {
         쓰레기 사진을 찍어 플로깅을 인증하세요.
         <ImgAddBox $imgUrl={imgUrl}>
           {imgUrl === "" && <ImgAddIcon src={addIcon} />}
-          <input type="file" hidden accept="image/*" onChange={handleImgChange} />
+          <input type="file" hidden accept="image/*" capture="environment" onChange={handleImgChange} />
         </ImgAddBox>
         <ResultWrapper>
           <ScoreBox category="시간" value={calcTime(time)} />
