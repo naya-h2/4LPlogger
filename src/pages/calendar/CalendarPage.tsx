@@ -8,7 +8,6 @@ import arrowLeft from "assets/icon/arrow-left_md.svg";
 import arrowRight from "assets/icon/arrow-right_md.svg";
 import "styles/customCalendar.css";
 import { useQuery } from "react-query";
-import axios from "axios";
 import api from "api/axios";
 import { useCheckLogin } from "hooks/useCheckLogin";
 
@@ -24,7 +23,7 @@ function CalendarPage() {
   const { data, refetch, isSuccess } = useQuery({
     queryKey: ["month", month],
     queryFn: async () => {
-      const res = await axios.post("/monthly", { date: `${month}-01` });
+      const res = await api.post("/monthly", { date: `${month}-01` });
       let arr = [] as any[];
       res.data.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? arr.push(plogging) : null));
       setTodayData(arr);
