@@ -25,7 +25,7 @@ function LoginPage() {
       await authCtx.login(email, password);
 
       if (authCtx.isSuccess) {
-        navigate("/", { replace: true }); // 현재 페이지를 새로운 페이지로 교체
+        navigate("/");
       }
     } catch (error) {
       console.error("에러 발생:", error);
