@@ -3,8 +3,14 @@ import styled from "styled-components";
 import api from "../../api/axios";
 import BottomNav from "components/BottomNav";
 
-// Define the interface for the ranking data
 interface Ranking {
+  nickname: string;
+  rank: number;
+  clovers: number;
+}
+
+interface myRanking {
+  email: string;
   nickname: string;
 }
 
@@ -12,12 +18,26 @@ function HomePage() {
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [myRank, setMyRank] = useState<number | null>(null);
   const [myScore, setMyScore] = useState<number | null>(null);
+  const [myNickname, setMyNickname] = useState<string>("");
 
   useEffect(() => {
+    // 내 닉네임을 가져옴
+    api
+      .get("api/members/me")
+      .then((response) => {
+        const myInfo = response.data as myRanking;
+        setMyNickname(myInfo.nickname); // 나의 닉네임 설정
+      })
+      .catch((error) => {
+        console.error("There was an error fetching my nickname!", error);
+      });
+
     // 내 랭킹 정보와 클로버 수를 가져옴
     api
       .get("/api/members/rank")
       .then((response) => {
+        // 나의 닉네임을 기준으로 나의 순위를 찾음
+        setMyNickname(response.data.nickname);
         setMyRank(response.data.rank);
         setMyScore(response.data.clovers);
       })
@@ -37,8 +57,9 @@ function HomePage() {
   }, []);
 
   const fetchCloverCount = () => {
+    console.log(`${myNickname}님의 클로버 개수는 ${myScore}`);
     if (myScore !== null) {
-      alert(`현재 클로버 개수는 ${myScore}개 입니다.`);
+      alert(`현재 ${myNickname}님의 클로버 개수는 ${myScore}개 입니다.`);
     }
   };
 
