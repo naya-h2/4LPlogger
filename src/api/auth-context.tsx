@@ -66,20 +66,24 @@ export const AuthContextProvider: React.FC<Props> = (props) => {
     });
   };
 
-  const loginHandler = (email: string, password: string) => {
+  const loginHandler = async (email: string, password: string) => {
     setIsSuccess(false);
     // console.log(isSuccess);
+    const res = await authAction.loginActionHandler(email, password);
+    const data: LoginToken = res?.data;
+    if (data !== null) {
+      setToken(data.accessToken);
+      logoutTimer = setTimeout(logoutHandler, authAction.loginTokenHandler(data.accessToken, data.tokenExpiresIn));
 
-    const data = authAction.loginActionHandler(email, password);
-    data.then((result: any) => {
-      if (result !== null) {
-        const loginData: LoginToken = result.data;
-        setToken(loginData.accessToken);
-        logoutTimer = setTimeout(logoutHandler, authAction.loginTokenHandler(loginData.accessToken, loginData.tokenExpiresIn));
-        setIsSuccess(true);
-        // console.log(isSuccess);
+      const getUserRes = await authAction.getUserActionHandler(data.accessToken);
+      if (getUserRes !== null) {
+        const userData: UserInfo = getUserRes.data;
+        setUserObj(userData);
       }
-    });
+
+      setIsSuccess(true);
+      // console.log(isSuccess);
+    }
   };
 
   const logoutHandler = useCallback(() => {

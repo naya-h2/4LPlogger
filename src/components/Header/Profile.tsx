@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Dropdown from "./Dropdown";
 import api from "api/axios";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "api/auth-context";
 
 function Profile() {
   const [isLogin, setIsLogin] = useState(false);
-  const [nickName, setNickName] = useState("");
+  const {
+    userObj: { nickname },
+  } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -16,18 +19,9 @@ function Profile() {
     }
   }, []);
 
-  const getNickName = async () => {
-    const res = await api.get("/api/members/me");
-    setNickName(res.data.nickname);
-  };
-
-  useEffect(() => {
-    getNickName();
-  }, [isLogin]);
-
   return (
     <Wrapper>
-      <span onClick={() => (isLogin ? setIsOpen((prev) => !prev) : navigate("/login"))}>{isLogin ? `${nickName} 님` : "로그인"}</span>
+      <span onClick={() => (isLogin ? setIsOpen((prev) => !prev) : navigate("/login"))}>{isLogin ? `${nickname} 님` : "로그인"}</span>
       {isOpen && <Dropdown />}
     </Wrapper>
   );
