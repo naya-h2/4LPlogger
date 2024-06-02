@@ -5,13 +5,7 @@ import api from "api/axios";
 
 interface Ranking {
   nickname: string;
-  rank: number;
-  clovers: number;
-}
-
-interface myRanking {
-  email: string;
-  nickname: string;
+  score: number;
 }
 
 function RankingPage() {
@@ -21,35 +15,28 @@ function RankingPage() {
   const [myNickname, setMyNickname] = useState<string>("");
 
   useEffect(() => {
-    // 내 닉네임을 가져옴
+    // 나의 랭킹 정보를 가져옴
     api
-      .get("/member/me")
+      .get("/api/members/rank")
       .then((response) => {
-        const myInfo = response.data as myRanking;
-        setMyNickname(myInfo.nickname); // 나의 닉네임 설정
+        setMyRank(response.data.rank);
+        setMyScore(response.data.clovers);
+        setMyNickname(response.data.nickname); // 나의 닉네임 설정
       })
       .catch((error) => {
-        console.error("There was an error fetching my nickname!", error);
+        console.error("There was an error fetching my rank!", error);
       });
 
     // 상위 랭킹 정보를 가져옴
     api
       .get("/api/members/top?count=30")
       .then((response) => {
-        const fetchedRankings = response.data as Ranking[];
-        setRankings(fetchedRankings);
-
-        // 나의 닉네임을 기준으로 나의 순위를 찾음
-        const myRanking = fetchedRankings.find((r) => r.nickname === myNickname);
-        if (myRanking) {
-          setMyRank(myRanking.rank);
-          setMyScore(myRanking.clovers);
-        }
+        setRankings(response.data as Ranking[]);
       })
       .catch((error) => {
         console.error("There was an error fetching the rankings!", error);
       });
-  }, [myNickname]);
+  }, []);
 
   return (
     <Container>
@@ -57,18 +44,19 @@ function RankingPage() {
         <Title>오늘의 랭킹🔥</Title>
       </TitleWrapper>
       <Line />
-
-      <MyRankingBox>
-        <RankText>{myRank}</RankText>
-        <ProfileImage src="/clover-profile.png" alt="Profile" />
-        <Info>
-          <Nickname>{myNickname}</Nickname> {/* 나의 닉네임 사용 */}
-        </Info>
-        <CloverCount>
-          <CloverImage src="/clover-logo.svg" alt="Clover" />
-          {myScore}
-        </CloverCount>
-      </MyRankingBox>
+      {myRank !== null && myScore !== null && (
+        <MyRankingBox>
+          <RankText>{myRank}</RankText>
+          <ProfileImage src="/clover-profile.png" alt="Profile" />
+          <Info>
+            <Nickname>{myNickname}</Nickname> {/* 나의 닉네임 사용 */}
+          </Info>
+          <CloverCount>
+            <CloverImage src="/clover-logo.svg" alt="Clover" />
+            {myScore}
+          </CloverCount>
+        </MyRankingBox>
+      )}
       <RankingList>
         {rankings.map((ranking, index) => (
           <RankingBox key={index}>
@@ -79,7 +67,7 @@ function RankingPage() {
             </Info>
             <CloverCount>
               <CloverImage src="/clover-logo.svg" alt="Clover" />
-              {ranking.clovers} {/* 상위 30명의 클로버 갯수 표시 */}
+              {ranking.score} {/* 상위 30명의 클로버 갯수 표시 */}
             </CloverCount>
           </RankingBox>
         ))}
@@ -90,6 +78,7 @@ function RankingPage() {
 }
 
 export default RankingPage;
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
