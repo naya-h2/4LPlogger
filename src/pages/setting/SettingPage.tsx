@@ -1,10 +1,13 @@
 import BottomNav from "components/BottomNav";
-import React, { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "api/auth-context";
+import { useCheckLogin } from "hooks/useCheckLogin";
 
 function SettingPage() {
+  useCheckLogin();
+
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");

@@ -1,5 +1,6 @@
+import { useCheckLogin } from "hooks/useCheckLogin";
 import BottomBtnLayout from "pages/BottomBtnLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -17,6 +18,8 @@ function GoalPage() {
   const { customGoal } = watch();
 
   const goalRegex = /^[0-9]*$/;
+
+  useCheckLogin();
 
   const saveGoal = () => {
     const value = selectedGoal === "직접 입력" ? customGoal : selectedGoal.replace("km", "");

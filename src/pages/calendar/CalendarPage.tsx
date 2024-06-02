@@ -10,8 +10,11 @@ import "styles/customCalendar.css";
 import { useQuery } from "react-query";
 import axios from "axios";
 import api from "api/axios";
+import { useCheckLogin } from "hooks/useCheckLogin";
 
 function CalendarPage() {
+  useCheckLogin();
+
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<any>(today);
   const [month, setMonth] = useState(format(today, "yyyy-MM"));

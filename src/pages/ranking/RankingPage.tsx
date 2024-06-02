@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BottomNav from "components/BottomNav";
 import api from "api/axios";
+import { useCheckLogin } from "hooks/useCheckLogin";
 
 interface Ranking {
   nickname: string;
@@ -9,6 +10,7 @@ interface Ranking {
 }
 
 function RankingPage() {
+  useCheckLogin();
   const [rankings, setRankings] = useState<Ranking[]>([]);
   const [myRank, setMyRank] = useState<number | null>(null);
   const [myScore, setMyScore] = useState<number | null>(null);
