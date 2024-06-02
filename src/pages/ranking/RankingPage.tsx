@@ -42,7 +42,6 @@ function RankingPage() {
         // 나의 닉네임을 기준으로 나의 순위를 찾음
         const myRanking = fetchedRankings.find((r) => r.nickname === myNickname);
         if (myRanking) {
-          setMyNickname(myRanking.nickname);
           setMyRank(myRanking.rank);
           setMyScore(myRanking.clovers);
         }
