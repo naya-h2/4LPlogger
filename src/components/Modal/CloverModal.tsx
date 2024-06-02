@@ -23,6 +23,10 @@ function CloverModal({ hideModal, cloverCount }: Props) {
       <Button
         onClick={() => {
           hideModal();
+          localStorage.removeItem("goal");
+          localStorage.removeItem("ploggingResult");
+          localStorage.removeItem("score");
+          localStorage.removeItem("clover");
           navigate("/");
         }}
       >

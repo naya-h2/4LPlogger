@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent, useContext } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
 import axios from "axios";
+import AuthContext from "api/auth-context";
 
 function SignupPage() {
   const [nickname, setNickname] = useState("");
@@ -32,7 +32,7 @@ function SignupPage() {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      console.error("가입 오류:", error);
+      // console.error("가입 오류:", error);
       // 오류 처리 로직 추가
     }
     setIsLoading(false); // 로딩 종료

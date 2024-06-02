@@ -24,7 +24,7 @@ const fetchAuth = async (fetchData: FetchData) => {
       (method === "delete" && (await axios.delete(url, header)));
 
     if (response && response.data.error) {
-      console.log((response.data as LoginFailType).error);
+      // console.log((response.data as LoginFailType).error);
       alert("Wrong ID or Password");
       return null;
     }
@@ -39,13 +39,13 @@ const fetchAuth = async (fetchData: FetchData) => {
     if (axios.isAxiosError(err)) {
       const serverError = err as AxiosError<ServerError>;
       if (serverError && serverError.response) {
-        console.log(serverError.response.data);
+        // console.log(serverError.response.data);
         alert("failed!");
         return null;
       }
     }
 
-    console.log(err);
+    // console.log(err);
     alert("failed!");
     return null;
   }

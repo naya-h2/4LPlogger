@@ -10,30 +10,35 @@ import arrowRight from "assets/icon/arrow-right_md.svg";
 import "styles/customCalendar.css";
 import { useQuery } from "react-query";
 import axios from "axios";
+import api from "api/axios";
+import AuthContext from "api/auth-context";
 
 function CalendarPage() {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState<any>(today);
   const [month, setMonth] = useState(format(today, "yyyy-MM"));
+  const [clover, setClover] = useState(0);
 
   const { data, refetch } = useQuery({
     queryKey: ["month", month],
     queryFn: async () => {
-      const res = await fetch("/clover");
-
-      // const res = await fetch("/post", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     date: "2024-05-28",
-      //     goalDistance: 5.0,
-      //     distance: 2.8,
-      //     time: "00:30:28",
-      //     image: "https://i.namu.wiki/i/1RiO1dwwtXVFZu4PbcaE1CbErlkp2AOYNIgNJvhXbByjCuElwK712dWrDCTyl9xu9oTnGMz_axb0CKqnVJ8y9w.webp",
-      //     status: "sucess",
-      //   }),
+      // const res = await api.get("/monthly", {
+      //   data: {
+      //     date: "2024-05-26",
+      //   },
       // });
+      // console.log(res.data);
     },
   });
+
+  const getCloverNumber = async () => {
+    const res = await api.get("/api/members/rank");
+    setClover(res.data.clovers);
+  };
+
+  useEffect(() => {
+    getCloverNumber();
+  }, []);
 
   // useEffect(() => {
   //   refetch();
@@ -65,7 +70,8 @@ function CalendarPage() {
     <Container>
       <Title>플로깅 기록을 모아보세요</Title>
       <Clover>
-        <Icon src={cloverIcon} />: 111
+        <Icon src={cloverIcon} />
+        {`: ${clover}`}
       </Clover>
       <Calendar
         value={selectedDate}

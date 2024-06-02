@@ -10,6 +10,8 @@ function ScorePage() {
   const { isOpen, handleModalClose, handleModalOpen } = useModal();
   const goal = Number(localStorage.getItem("goal") || "0");
   const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
+  const score = localStorage.getItem("score") || "0";
+  const clover = localStorage.getItem("clover") || "0";
 
   return (
     <BottomBtnLayout titleText="플로깅을 분석할게요📝" btnText="확인" btnClickFunc={handleModalOpen}>
@@ -21,9 +23,9 @@ function ScorePage() {
         </ResultWrapper>
         <CloverIcon src={runCloverIcon} />
         <ProgressBar ratio={(km / goal) * 100} />
-        <ScoreWrapper>{`${Math.round((km / goal) * 100)} 점`}</ScoreWrapper>
+        <ScoreWrapper>{`${score} 점`}</ScoreWrapper>
       </Card>
-      {isOpen && <CloverModal hideModal={handleModalClose} cloverCount={Math.round(((km / goal) * 100) / 10)} />}
+      {isOpen && <CloverModal hideModal={handleModalClose} cloverCount={Number(clover)} />}
     </BottomBtnLayout>
   );
 }
