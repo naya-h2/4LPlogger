@@ -1,5 +1,4 @@
 import RecordCard from "components/RecordCard";
-import { MONTH } from "constants/mockup";
 import styled from "styled-components";
 import cloverIcon from "assets/icon/logo-run.svg";
 import { useEffect, useState } from "react";
@@ -26,8 +25,6 @@ function CalendarPage() {
     },
   });
 
-  console.log(data);
-
   const getCloverNumber = async () => {
     const res = await api.get("/api/members/rank");
     setClover(res.data.clovers);
@@ -40,10 +37,6 @@ function CalendarPage() {
   useEffect(() => {
     refetch();
   }, [month]);
-
-  // useEffect(() => {
-  //   setDataList(data?.filter((item) => item.deadline === format(selectedDate, 'yyyy-MM-dd')));
-  // }, [selectedDate]);
 
   const handleDateChange = (newDate: Date) => {
     setSelectedDate(newDate);
@@ -90,7 +83,7 @@ function CalendarPage() {
           const curDate = format(date, "yyyy-MM-dd");
           if (!data) return null;
           for (const plogging of data) {
-            if (plogging.date === curDate) return <ImgTile src={plogging.imgSrc} />;
+            if (plogging.date === curDate) return <ImgTile src={plogging.imageURL} />;
           }
           return null;
         }}
