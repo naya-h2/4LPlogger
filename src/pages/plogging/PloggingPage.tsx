@@ -6,6 +6,7 @@ import pauseIcon from "assets/icon/plogging-pause.svg";
 import startIcon from "assets/icon/plogging-restart.svg";
 import { distance } from "utils/calcDistance";
 import { calcTime } from "utils/calcTime";
+import { Helmet } from "react-helmet-async";
 
 function PloggingPage() {
   const navigate = useNavigate();
@@ -79,19 +80,24 @@ function PloggingPage() {
   }, [lastPosition, isStop]);
 
   return (
-    <Container>
-      <ResultSection>
-        <Timer>{calcTime(sec)}</Timer>
-        <Distance>
-          {dst.toFixed(4)} <Span>km</Span>
-        </Distance>
-        <Button onClick={handleStopClick}>종료</Button>
-      </ResultSection>
-      <MemoizedMap curPositionArr={lastPosition} mapInfo={mapInfo} setMapInfo={setMapInfo} />
-      <StopBtn onClick={() => setIsStop((prev) => !prev)}>
-        <img src={isStop ? startIcon : pauseIcon} />
-      </StopBtn>
-    </Container>
+    <>
+      <Helmet>
+        <title>플로깅중🍀 | 네잎플로거</title>
+      </Helmet>
+      <Container>
+        <ResultSection>
+          <Timer>{calcTime(sec)}</Timer>
+          <Distance>
+            {dst.toFixed(4)} <Span>km</Span>
+          </Distance>
+          <Button onClick={handleStopClick}>종료</Button>
+        </ResultSection>
+        <MemoizedMap curPositionArr={lastPosition} mapInfo={mapInfo} setMapInfo={setMapInfo} />
+        <StopBtn onClick={() => setIsStop((prev) => !prev)}>
+          <img src={isStop ? startIcon : pauseIcon} />
+        </StopBtn>
+      </Container>
+    </>
   );
 }
 

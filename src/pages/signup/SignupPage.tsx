@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "api/auth-context";
+import { Helmet } from "react-helmet-async";
 
 function SignupPage() {
   const [nickname, setNickname] = useState("");
@@ -36,40 +37,45 @@ function SignupPage() {
   };
 
   return (
-    <Container>
-      <Image>
-        <LogoContainer>
-          <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
-          <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
-        </LogoContainer>
-        <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
-      </Image>
-      <Form>
-        <Label htmlFor="emailInput">이메일</Label>
-        <Input type="email" id="emailInput" name="email" placeholder="이메일을 입력하세요." value={email} onChange={handleChange} />
-        <Label htmlFor="passwordInput">비밀번호</Label>
-        <Input type="password" id="passwordInput" name="password" placeholder="비밀번호를 입력하세요." value={password} onChange={handleChange} />
-        <Label htmlFor="nicknameInput">닉네임</Label>
-        <Input type="text" id="nicknameInput" name="nickname" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
-        <Label
-          style={{
-            marginTop: "3px",
-            color: "#bebebe",
-            fontWeight: "normal",
-            fontSize: "14px",
-          }}
-        >
-          닉네임은 10글자 이하로 설정해주세요.
-        </Label>
-        <Button onClick={handleSignup} disabled={isLoading}>
-          {isLoading ? "가입 중..." : "가입하기"}
-        </Button>
-        <LoginLink to="/login">
-          <span>이미 가입하셨나요? </span>
-          <LoginText>로그인 하기</LoginText>
-        </LoginLink>
-      </Form>
-    </Container>
+    <>
+      <Helmet>
+        <title>회원가입 | 네잎플로거</title>
+      </Helmet>
+      <Container>
+        <Image>
+          <LogoContainer>
+            <CloverLogoImage src="/clover-logo.svg" alt="Clover Logo" />
+            <LogoLetterImage src="/logo-letter.svg" alt="Letter Logo" />
+          </LogoContainer>
+          <SignupLetterImage src="/letter-signup.png" alt="Login Letter" />
+        </Image>
+        <Form>
+          <Label htmlFor="emailInput">이메일</Label>
+          <Input type="email" id="emailInput" name="email" placeholder="이메일을 입력하세요." value={email} onChange={handleChange} />
+          <Label htmlFor="passwordInput">비밀번호</Label>
+          <Input type="password" id="passwordInput" name="password" placeholder="비밀번호를 입력하세요." value={password} onChange={handleChange} />
+          <Label htmlFor="nicknameInput">닉네임</Label>
+          <Input type="text" id="nicknameInput" name="nickname" placeholder="닉네임을 입력하세요." value={nickname} onChange={handleChange} />
+          <Label
+            style={{
+              marginTop: "3px",
+              color: "#bebebe",
+              fontWeight: "normal",
+              fontSize: "14px",
+            }}
+          >
+            닉네임은 10글자 이하로 설정해주세요.
+          </Label>
+          <Button onClick={handleSignup} disabled={isLoading}>
+            {isLoading ? "가입 중..." : "가입하기"}
+          </Button>
+          <LoginLink to="/login">
+            <span>이미 가입하셨나요? </span>
+            <LoginText>로그인 하기</LoginText>
+          </LoginLink>
+        </Form>
+      </Container>
+    </>
   );
 }
 

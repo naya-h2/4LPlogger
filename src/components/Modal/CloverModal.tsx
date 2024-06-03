@@ -26,7 +26,7 @@ function CloverModal({ hideModal, cloverCount }: Props) {
           localStorage.removeItem("goal");
           localStorage.removeItem("ploggingResult");
           localStorage.removeItem("score");
-          localStorage.removeItem("clover");
+          localStorage.removeItem("curCloverNum");
           navigate("/");
         }}
       >

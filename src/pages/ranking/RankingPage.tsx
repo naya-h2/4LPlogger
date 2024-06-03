@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BottomNav from "components/BottomNav";
 import api from "api/axios";
 import { useCheckLogin } from "hooks/useCheckLogin";
+import { Helmet } from "react-helmet-async";
 
 interface Ranking {
   nickname: string;
@@ -40,41 +41,46 @@ function RankingPage() {
   }, []);
 
   return (
-    <Container>
-      <TitleWrapper>
-        <Title>오늘의 랭킹🔥</Title>
-      </TitleWrapper>
-      <Line />
+    <>
+      <Helmet>
+        <title>랭킹 | 네잎플로거</title>
+      </Helmet>
+      <Container>
+        <TitleWrapper>
+          <Title>오늘의 랭킹🔥</Title>
+        </TitleWrapper>
+        <Line />
 
-      <MyRankingBox>
-        <RankText>{myRank}</RankText>
-        <ProfileImage src="/clover-profile.png" alt="Profile" />
-        <Info>
-          <Nickname>{myNickname}</Nickname> {/* 나의 닉네임 사용 */}
-        </Info>
-        <CloverCount>
-          <CloverImage src="/clover-logo.svg" alt="Clover" />
-          {myScore}
-        </CloverCount>
-      </MyRankingBox>
-      <RankingList>
-        {rankings.map((ranking, index) => (
-          <RankingBox key={index}>
-            <RankText>{ranking.rank}</RankText>
-            <ProfileImage src="/clover-profile.png" alt="Profile" />
-            <Info>
-              <Nickname>{ranking.nickname}</Nickname>
-            </Info>
-            <CloverCount>
-              <CloverImage src="/clover-logo.svg" alt="Clover" />
-              {ranking.clovers} {/* 상위 30명의 클로버 갯수 표시 */}
-            </CloverCount>
-          </RankingBox>
-        ))}
-      </RankingList>
-      <Spacer />
-      <BottomNav />
-    </Container>
+        <MyRankingBox>
+          <RankText>{myRank}</RankText>
+          <ProfileImage src="/clover-profile.png" alt="Profile" />
+          <Info>
+            <Nickname>{myNickname}</Nickname> {/* 나의 닉네임 사용 */}
+          </Info>
+          <CloverCount>
+            <CloverImage src="/clover-logo.svg" alt="Clover" />
+            {myScore}
+          </CloverCount>
+        </MyRankingBox>
+        <RankingList>
+          {rankings.map((ranking, index) => (
+            <RankingBox key={index}>
+              <RankText>{ranking.rank}</RankText>
+              <ProfileImage src="/clover-profile.png" alt="Profile" />
+              <Info>
+                <Nickname>{ranking.nickname}</Nickname>
+              </Info>
+              <CloverCount>
+                <CloverImage src="/clover-logo.svg" alt="Clover" />
+                {ranking.clovers} {/* 상위 30명의 클로버 갯수 표시 */}
+              </CloverCount>
+            </RankingBox>
+          ))}
+        </RankingList>
+        <Spacer />
+        <BottomNav />
+      </Container>
+    </>
   );
 }
 
