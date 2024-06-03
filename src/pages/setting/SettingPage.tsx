@@ -32,18 +32,15 @@ function SettingPage() {
     setIsLoading(true);
     if (isChangingNickname) {
       await authCtx.changeNickname(nickname);
-      if (authCtx.isSuccess) {
-        alert("닉네임이 변경되었습니다.");
-        await authCtx.getUser();
-        navigate("/");
-      }
+      alert("닉네임이 변경되었습니다.");
+      await authCtx.getUser();
+      navigate("/");
     } else {
       await authCtx.changePassword(currentPassword, password);
-      if (authCtx.isSuccess) {
-        alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
-        authCtx.logout();
-        navigate("/login");
-      }
+
+      alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
+      authCtx.logout();
+      navigate("/login");
     }
     setIsLoading(false);
   };
