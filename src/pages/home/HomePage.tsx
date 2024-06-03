@@ -21,12 +21,6 @@ function HomePage() {
   const [myNickname, setMyNickname] = useState<string>("");
 
   useEffect(() => {
-    // 내 닉네임을 가져옴
-    api.get("api/members/rank").then((response) => {
-      setMyNickname(response.data.nickname); // 나의 닉네임 설정
-      setMyRank(response.data.rank);
-      setMyScore(response.data.clovers);
-    });
     // 상위 랭킹 정보를 가져옴
     api
       .get("/api/members/top?count=10") // 10위까지의 랭킹 정보
@@ -39,10 +33,20 @@ function HomePage() {
   }, []);
 
   const fetchCloverCount = () => {
-    console.log(`${myNickname}님의 클로버 개수는 ${myScore}`);
-    if (myScore !== null) {
-      alert(`현재 ${myNickname}님의 클로버 개수는 ${myScore}개 입니다.`);
-    }
+    api
+      .get("api/members/rank")
+      .then((response) => {
+        setMyNickname(response.data.nickname); // 나의 닉네임 설정
+        setMyRank(response.data.rank);
+        setMyScore(response.data.clovers);
+        console.log(`${response.data.nickname}님의 클로버 개수는 ${response.data.clovers}`);
+        if (response.data.clovers !== null) {
+          alert(`현재 ${response.data.nickname}님의 클로버 개수는 ${response.data.clovers}개 입니다.`);
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error fetching my rank and clovers!", error);
+      });
   };
 
   return (
@@ -81,7 +85,6 @@ function HomePage() {
 }
 
 export default HomePage;
-
 const Container = styled.div`
   margin-top: 20px;
   display: flex;
