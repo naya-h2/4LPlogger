@@ -37,15 +37,17 @@ function SettingPage() {
       navigate("/");
     } else {
       await authCtx.changePassword(currentPassword, password);
-      alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
-      authCtx.logout();
-      navigate("/login");
+      if (authCtx.isSuccess) {
+        alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
+        authCtx.logout();
+        navigate("/login");
+      }
     }
     setIsLoading(false);
   };
 
   const handleConfirmSave = () => {
-    const confirmed = window.confirm("변경된 내용을 저장하시겠습니까?");
+    const confirmed = window.confirm("변경된 내용을 저장하고 홈으로 이동하시겠습니까?");
     if (confirmed) {
       handleSave();
     }
