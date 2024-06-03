@@ -22,29 +22,11 @@ function HomePage() {
 
   useEffect(() => {
     // 내 닉네임을 가져옴
-    api
-      .get("api/members/me")
-      .then((response) => {
-        const myInfo = response.data as myRanking;
-        setMyNickname(myInfo.nickname); // 나의 닉네임 설정
-      })
-      .catch((error) => {
-        console.error("There was an error fetching my nickname!", error);
-      });
-
-    // 내 랭킹 정보와 클로버 수를 가져옴
-    api
-      .get("/api/members/rank")
-      .then((response) => {
-        // 나의 닉네임을 기준으로 나의 순위를 찾음
-        setMyNickname(response.data.nickname);
-        setMyRank(response.data.rank);
-        setMyScore(response.data.clovers);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching my rank and clovers!", error);
-      });
-
+    api.get("api/members/rank").then((response) => {
+      setMyNickname(response.data.nickname); // 나의 닉네임 설정
+      setMyRank(response.data.rank);
+      setMyScore(response.data.clovers);
+    });
     // 상위 랭킹 정보를 가져옴
     api
       .get("/api/members/top?count=10") // 10위까지의 랭킹 정보
@@ -70,7 +52,7 @@ function HomePage() {
       <RankingContainer>
         {rankings.map((ranking, index) => (
           <ProfileCard key={index}>
-            <ProfileImage src="/clover-profile.png" alt={`Profile ${index + 1}`} />
+            <ProfileImage src="/clover-profile.png" alt={`Profile ${ranking.rank}`} />
             <Nickname>{ranking.nickname}</Nickname>
           </ProfileCard>
         ))}
