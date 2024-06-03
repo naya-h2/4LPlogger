@@ -70,7 +70,8 @@ function PostPage() {
       if (min > dst) min = dst;
     }
 
-    if (min === null) return;
+    if (min === null) return alert(`⚠️ 인증을 다시 시도해 주세요.`);
+
     if (MINIMUM < min) {
       setIsLoading(false);
       return alert(`⚠️ 쓰레기통 근처로 이동해서 인증해주세요!\n인증에 실패하면 클로버를 받을 수 없어요.`);
@@ -87,8 +88,8 @@ function PostPage() {
 
     alert(`사진 인증 결과\n[ ${verify.data.result} ]`);
 
-    setIsVerify(verify.data.result === "success" ? true : false);
     setIsLoading(false);
+    setIsVerify(verify.data.result === "success" ? true : false);
   };
 
   useEffect(() => {
