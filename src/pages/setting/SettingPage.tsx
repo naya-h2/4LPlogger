@@ -37,11 +37,10 @@ function SettingPage() {
       navigate("/");
     } else {
       await authCtx.changePassword(currentPassword, password);
-      if (authCtx.isSuccess) {
-        alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
-        authCtx.logout();
-        navigate("/login");
-      }
+
+      alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
+      authCtx.logout();
+      navigate("/login");
     }
     setIsLoading(false);
   };
