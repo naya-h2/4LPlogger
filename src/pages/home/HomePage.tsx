@@ -85,7 +85,6 @@ function HomePage() {
 }
 
 export default HomePage;
-
 const Container = styled.div`
   margin-top: 20px;
   display: flex;
