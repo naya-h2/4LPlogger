@@ -11,7 +11,7 @@ function ScorePage() {
   const goal = Number(localStorage.getItem("goal") || "0");
   const { km, time } = JSON.parse(localStorage.getItem("ploggingResult") || "");
   const score = localStorage.getItem("score") || "0";
-  const clover = localStorage.getItem("clover") || "0";
+  const clover = localStorage.getItem("curCloverNum") || "0";
 
   return (
     <BottomBtnLayout titleText="플로깅을 분석할게요📝" btnText="확인" btnClickFunc={handleModalOpen}>
