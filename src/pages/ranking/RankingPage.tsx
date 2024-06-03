@@ -10,11 +10,6 @@ interface Ranking {
   clovers: number;
 }
 
-interface myRanking {
-  email: string;
-  nickname: string;
-}
-
 function RankingPage() {
   useCheckLogin();
   const [rankings, setRankings] = useState<Ranking[]>([]);
@@ -22,35 +17,25 @@ function RankingPage() {
   const [myScore, setMyScore] = useState<number | null>(null);
   const [myNickname, setMyNickname] = useState<string>("");
 
+  const handleGetMyRank = async () => {
+    const response = await api.get("/api/members/rank");
+    setMyNickname(response.data.nickname); // 나의 닉네임 설정
+    setMyRank(response.data.rank);
+    setMyScore(response.data.clovers);
+  };
+
   useEffect(() => {
     // 내 닉네임을 가져옴
+    handleGetMyRank();
+    // 상위 랭킹 정보를 가져옴
     api
-      .get("api/members/me")
+      .get("/api/members/top?count=30")
       .then((response) => {
-        const myInfo = response.data as myRanking;
-        setMyNickname(myInfo.nickname); // 나의 닉네임 설정
-
-        // 상위 랭킹 정보를 가져옴
-        api
-          .get("/api/members/top?count=30")
-          .then((response) => {
-            const fetchedRankings = response.data as Ranking[];
-            setRankings(fetchedRankings);
-
-            // 나의 닉네임을 기준으로 나의 순위를 찾음
-            const myRanking = fetchedRankings.find((r) => r.nickname === myNickname);
-            if (myRanking) {
-              setMyNickname(myRanking.nickname);
-              setMyRank(myRanking.rank);
-              setMyScore(myRanking.clovers);
-            }
-          })
-          .catch((error) => {
-            console.error("There was an error fetching the rankings!", error);
-          });
+        const fetchedRankings = response.data as Ranking[];
+        setRankings(fetchedRankings);
       })
       .catch((error) => {
-        console.error("There was an error fetching my nickname!", error);
+        console.error("There was an error fetching the rankings!", error);
       });
   }, []);
 
