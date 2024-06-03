@@ -1,6 +1,7 @@
 import { useCheckLogin } from "hooks/useCheckLogin";
 import BottomBtnLayout from "pages/BottomBtnLayout";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -28,27 +29,32 @@ function GoalPage() {
   };
 
   return (
-    <BottomBtnLayout
-      titleText="목표를 설정하세요🔥"
-      btnText="뛰러가기"
-      disabled={selectedGoal === "" || Boolean(selectedGoal === "직접 입력" && (errors.customGoal || !customGoal))}
-      btnClickFunc={saveGoal}
-    >
-      <ButtonContainer>
-        {DEFAULT_GOAL.map((goal) => (
-          <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
-            {goal}
-          </Button>
-        ))}
-      </ButtonContainer>
-      {selectedGoal === DEFAULT_GOAL[3] && (
-        <InputContainer>
-          <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
-          <input {...register("customGoal", { required: "값을 입력해 주세요.", pattern: goalRegex })} placeholder="자연수로 입력해 주세요. (ex. 5)" />
-          <ErrorMsg>{errors.customGoal && "자연수로 입력해 주세요."}</ErrorMsg>
-        </InputContainer>
-      )}
-    </BottomBtnLayout>
+    <>
+      <Helmet>
+        <title>목표설정 | 네잎플로거</title>
+      </Helmet>
+      <BottomBtnLayout
+        titleText="목표를 설정하세요🔥"
+        btnText="뛰러가기"
+        disabled={selectedGoal === "" || Boolean(selectedGoal === "직접 입력" && (errors.customGoal || !customGoal))}
+        btnClickFunc={saveGoal}
+      >
+        <ButtonContainer>
+          {DEFAULT_GOAL.map((goal) => (
+            <Button key={goal} onClick={() => setSelectedGoal(goal)} $selected={selectedGoal === goal}>
+              {goal}
+            </Button>
+          ))}
+        </ButtonContainer>
+        {selectedGoal === DEFAULT_GOAL[3] && (
+          <InputContainer>
+            <label>{`${DEFAULT_GOAL[3]} (km)`}</label>
+            <input {...register("customGoal", { required: "값을 입력해 주세요.", pattern: goalRegex })} placeholder="자연수로 입력해 주세요. (ex. 5)" />
+            <ErrorMsg>{errors.customGoal && "자연수로 입력해 주세요."}</ErrorMsg>
+          </InputContainer>
+        )}
+      </BottomBtnLayout>
+    </>
   );
 }
 

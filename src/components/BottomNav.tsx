@@ -139,7 +139,7 @@ const NavItem = styled.img<{ isActive: boolean }>`
 
 const NavText = styled.span<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? "#54A300" : "#777777")}; /* Change color based on active state */
-  font-size: 18px;
+  font-size: 14px;
   text-decoration: none; /* Ensure no underline */
 `;
 

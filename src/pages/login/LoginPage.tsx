@@ -1,5 +1,6 @@
 import AuthContext from "api/auth-context";
 import React, { useState, useContext } from "react";
+import { Helmet } from "react-helmet-async";
 import { BrowserRouter, Route, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -33,28 +34,33 @@ function LoginPage() {
   };
 
   return (
-    <Container>
-      <LogoLetterImage src={"/logo-letter.svg"} alt="Logo Letter" />
-      <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
-      <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
+    <>
+      <Helmet>
+        <title>로그인 | 네잎플로거</title>
+      </Helmet>
+      <Container>
+        <LogoLetterImage src={"/logo-letter.svg"} alt="Logo Letter" />
+        <CloverLogoImage src="/clover-logo.svg" alt="Logo Run" />
+        <LetterLoginImage src="/letter-login.png" alt="Letter Login" />
 
-      <Form onSubmit={handleSubmit}>
-        <InputContainer>
-          <input type="email" placeholder=" 이메일" value={email} onChange={handleEmailChange} />
-        </InputContainer>
-        <InputContainer>
-          <input type="password" placeholder=" 비밀번호" value={password} onChange={handlePasswordChange} />
-        </InputContainer>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "로그인 중..." : "로그인"}
-        </Button>
-      </Form>
+        <Form onSubmit={handleSubmit}>
+          <InputContainer>
+            <input type="email" placeholder=" 이메일" value={email} onChange={handleEmailChange} />
+          </InputContainer>
+          <InputContainer>
+            <input type="password" placeholder=" 비밀번호" value={password} onChange={handlePasswordChange} />
+          </InputContainer>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "로그인 중..." : "로그인"}
+          </Button>
+        </Form>
 
-      <SignupLink to="/signup">
-        <span>회원이 아니신가요? </span>
-        <SignupText>회원가입 하기</SignupText>
-      </SignupLink>
-    </Container>
+        <SignupLink to="/signup">
+          <span>회원이 아니신가요? </span>
+          <SignupText>회원가입 하기</SignupText>
+        </SignupLink>
+      </Container>
+    </>
   );
 }
 

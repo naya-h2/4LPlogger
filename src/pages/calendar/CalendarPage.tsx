@@ -10,6 +10,7 @@ import "styles/customCalendar.css";
 import { useQuery } from "react-query";
 import api from "api/axios";
 import { useCheckLogin } from "hooks/useCheckLogin";
+import { Helmet } from "react-helmet-async";
 
 function CalendarPage() {
   useCheckLogin();
@@ -67,48 +68,53 @@ function CalendarPage() {
   }, [selectedDate]);
 
   return (
-    <Container>
-      <Title>플로깅 기록을 모아보세요</Title>
-      <Clover>
-        <Icon src={cloverIcon} />
-        {`: ${clover}`}
-      </Clover>
-      <Calendar
-        value={selectedDate}
-        onChange={(date) => {
-          setTodayData([]);
-          setSelectedDate(date);
-        }}
-        onClickMonth={(date) => setMonth(format(date, "yyyy-MM"))}
-        prevLabel={<ArrowButton src={arrowLeft} onClick={handlePrevMonthClick} />}
-        nextLabel={<ArrowButton src={arrowRight} onClick={handleNextMonthClick} />}
-        formatDay={(locale, date) => format(date, "dd")}
-        formatYear={(locale, date) => format(date, "yyyy")}
-        formatMonthYear={(locale, date) => format(date, "MM월")}
-        calendarType="gregory" // 일요일 부터 시작
-        showNeighboringMonth={false} // 전달, 다음달 날짜 숨기기
-        next2Label={null} // +1년 & +10년 이동 버튼 숨기기
-        prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
-        minDetail="year" // 10년단위 년도 숨기기
-        tileContent={({ date, view }) => {
-          const curDate = format(date, "yyyy-MM-dd");
-          if (!data) return null;
-          let tile = null;
-          for (const plogging of data) {
-            if (plogging.date === curDate) tile = <ImgTile src={plogging.imageURL} />;
-          }
-          return tile;
-        }}
-      />
-      <Guide>가장 마지막 기록의 인증 사진이 썸네일이 됩니다.</Guide>
-      {isSuccess && (
-        <CardWrapper>
-          {todayData?.length === 0
-            ? "기록 데이터가 없습니다."
-            : todayData.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={plogging.imageURL} data={plogging} /> : null))}
-        </CardWrapper>
-      )}
-    </Container>
+    <>
+      <Helmet>
+        <title>모아보기 | 네잎플로거</title>
+      </Helmet>
+      <Container>
+        <Title>플로깅 기록을 모아보세요</Title>
+        <Clover>
+          <Icon src={cloverIcon} />
+          {`: ${clover}`}
+        </Clover>
+        <Calendar
+          value={selectedDate}
+          onChange={(date) => {
+            setTodayData([]);
+            setSelectedDate(date);
+          }}
+          onClickMonth={(date) => setMonth(format(date, "yyyy-MM"))}
+          prevLabel={<ArrowButton src={arrowLeft} onClick={handlePrevMonthClick} />}
+          nextLabel={<ArrowButton src={arrowRight} onClick={handleNextMonthClick} />}
+          formatDay={(locale, date) => format(date, "dd")}
+          formatYear={(locale, date) => format(date, "yyyy")}
+          formatMonthYear={(locale, date) => format(date, "MM월")}
+          calendarType="gregory" // 일요일 부터 시작
+          showNeighboringMonth={false} // 전달, 다음달 날짜 숨기기
+          next2Label={null} // +1년 & +10년 이동 버튼 숨기기
+          prev2Label={null} // -1년 & -10년 이동 버튼 숨기기
+          minDetail="year" // 10년단위 년도 숨기기
+          tileContent={({ date, view }) => {
+            const curDate = format(date, "yyyy-MM-dd");
+            if (!data) return null;
+            let tile = null;
+            for (const plogging of data) {
+              if (plogging.date === curDate && plogging.imageURL) tile = <ImgTile src={plogging.imageURL || cloverIcon} />;
+            }
+            return tile;
+          }}
+        />
+        <Guide>가장 마지막 기록의 인증 사진이 썸네일이 됩니다.</Guide>
+        {isSuccess && (
+          <CardWrapper>
+            {todayData?.length === 0
+              ? "기록 데이터가 없습니다."
+              : todayData.map((plogging: any) => (plogging.date === format(selectedDate, "yyyy-MM-dd") ? <RecordCard key={plogging.imageURL} data={plogging} /> : null))}
+          </CardWrapper>
+        )}
+      </Container>
+    </>
   );
 }
 
