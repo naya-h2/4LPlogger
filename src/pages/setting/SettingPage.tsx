@@ -81,7 +81,6 @@ function SettingPage() {
           {isLoading ? "저장 중..." : "저장하기"}
         </Button>
       </FormContainer>
-      <Spacer />
       <BottomNav />
     </Container>
   );
@@ -95,10 +94,6 @@ const Container = styled.div`
   padding: 16px;
   justify-content: center;
   align-items: center;
-`;
-
-const Spacer = styled.div`
-  height: 80px; /* 80px spacer div */
 `;
 
 const CloverProfileImage = styled.img`
