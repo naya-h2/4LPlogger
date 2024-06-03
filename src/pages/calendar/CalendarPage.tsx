@@ -95,7 +95,7 @@ function CalendarPage() {
           if (!data) return null;
           let tile = null;
           for (const plogging of data) {
-            if (plogging.date === curDate) tile = <ImgTile src={plogging.imageURL} />;
+            if (plogging.date === curDate && plogging.imageURL) tile = <ImgTile src={plogging.imageURL || cloverIcon} />;
           }
           return tile;
         }}
