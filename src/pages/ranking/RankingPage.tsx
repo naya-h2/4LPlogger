@@ -72,9 +72,7 @@ function RankingPage() {
           </RankingBox>
         ))}
       </RankingList>
-
       <BottomNav />
-      <Spacer />
     </Container>
   );
 }
@@ -86,10 +84,6 @@ const Container = styled.div`
   align-items: flex-start;
   margin-top: 20px;
   padding-left: 10px;
-`;
-
-const Spacer = styled.div`
-  height: 80px; /* 80px spacer div */
 `;
 
 const TitleWrapper = styled.div`
