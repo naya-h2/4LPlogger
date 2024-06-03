@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "api/auth-context";
 import { useCheckLogin } from "hooks/useCheckLogin";
-import { Helmet } from "react-helmet-async";
 
 function SettingPage() {
   useCheckLogin();
@@ -33,18 +32,15 @@ function SettingPage() {
     setIsLoading(true);
     if (isChangingNickname) {
       await authCtx.changeNickname(nickname);
-      if (authCtx.isSuccess) {
-        alert("닉네임이 변경되었습니다.");
-        await authCtx.getUser();
-        navigate("/");
-      }
+      alert("닉네임이 변경되었습니다.");
+      await authCtx.getUser();
+      navigate("/");
     } else {
       await authCtx.changePassword(currentPassword, password);
-      if (authCtx.isSuccess) {
-        alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
-        authCtx.logout();
-        navigate("/");
-      }
+
+      alert("비밀번호가 변경되었습니다. 다시 로그인하세요.");
+      authCtx.logout();
+      navigate("/login");
     }
     setIsLoading(false);
   };
@@ -57,39 +53,34 @@ function SettingPage() {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>계정설정 | 네잎플로거</title>
-      </Helmet>
-      <Container>
-        <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
-        <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
-        <FormContainer>
-          {!isChangingNickname && (
-            <>
-              <Label htmlFor="currentPassword">현재 비밀번호</Label>
-              <Input type="password" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호를 입력하세요." value={currentPassword} onChange={handleChange} />
-            </>
-          )}
-          <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "새 비밀번호"}</Label>
-          <Input
-            type={isChangingNickname ? "text" : "password"}
-            id="inputField"
-            placeholder={isChangingNickname ? "닉네임을 입력하세요." : "새 비밀번호를 입력하세요."}
-            value={isChangingNickname ? nickname : password}
-            onChange={handleChange}
-          />
-          <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>
-            {isChangingNickname ? "닉네임은 10글자 이하로 설정해주세요." : "비밀번호는 6글자 이상으로 설정해주세요."}
-          </Label>
-          <Button onClick={handleConfirmSave} disabled={isLoading}>
-            {isLoading ? "저장 중..." : "저장하기"}
-          </Button>
-        </FormContainer>
-        <Spacer />
-        <BottomNav />
-      </Container>
-    </>
+    <Container>
+      <CloverProfileImage src="/clover-profile.png" alt="Clover Profile" />
+      <ToggleButton onClick={() => setIsChangingNickname(!isChangingNickname)}>{isChangingNickname ? "비밀번호 변경하기" : "닉네임 변경하기"}</ToggleButton>
+      <FormContainer>
+        {!isChangingNickname && (
+          <>
+            <Label htmlFor="currentPassword">현재 비밀번호</Label>
+            <Input type="password" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호를 입력하세요." value={currentPassword} onChange={handleChange} />
+          </>
+        )}
+        <Label htmlFor="inputField">{isChangingNickname ? "닉네임" : "새 비밀번호"}</Label>
+        <Input
+          type={isChangingNickname ? "text" : "password"}
+          id="inputField"
+          placeholder={isChangingNickname ? "닉네임을 입력하세요." : "새 비밀번호를 입력하세요."}
+          value={isChangingNickname ? nickname : password}
+          onChange={handleChange}
+        />
+        <Label style={{ color: "#bebebe", fontWeight: "normal", fontSize: "14px" }}>
+          {isChangingNickname ? "닉네임은 10글자 이하로 설정해주세요." : "비밀번호는 6글자 이상으로 설정해주세요."}
+        </Label>
+        <Button onClick={handleConfirmSave} disabled={isLoading}>
+          {isLoading ? "저장 중..." : "저장하기"}
+        </Button>
+      </FormContainer>
+      <Spacer />
+      <BottomNav />
+    </Container>
   );
 }
 
