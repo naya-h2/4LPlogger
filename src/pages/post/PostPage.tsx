@@ -9,6 +9,7 @@ import { TRASH } from "assets/data/trash";
 import { distance } from "utils/calcDistance";
 import api from "api/axios";
 import { format } from "date-fns";
+import { Helmet } from "react-helmet-async";
 
 const MINIMUM = 0.05;
 
@@ -95,39 +96,44 @@ function PostPage() {
   }, [uploadUrl]);
 
   return (
-    <BottomBtnLayout
-      titleText="플로깅을 완료했어요✨"
-      btnText="기록하기"
-      btnClickFunc={() => {
-        setIsLoading(true);
-        handlePostClick();
-      }}
-      disabled={isLoading}
-    >
-      <CardContainer>
-        <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
-        쓰레기 사진을 찍어 플로깅을 인증하세요.
-        <ImgAddBox $imgUrl={imgUrl}>
-          {imgUrl === "" && <ImgAddIcon src={addIcon} />}
-          <input type="file" hidden accept="image/*" capture="environment" onChange={handleImgChange} />
-        </ImgAddBox>
-        <ResultWrapper>
-          <ScoreBox category="시간" value={calcTime(time)} />
-          <ScoreBox category="km" value={km.toFixed(4)} />
-        </ResultWrapper>
-        <Button
-          onClick={() => {
-            setIsLoading(true);
-            handleVerifyClick();
-          }}
-          disabled={isVerify || isLoading || !imgUrl}
-          $disabled={isVerify || isLoading || !imgUrl}
-        >
-          {isLoading ? "인증하는 중.." : isVerify ? "인증완료" : "인증하기"}
-        </Button>
-        플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
-      </CardContainer>
-    </BottomBtnLayout>
+    <>
+      <Helmet>
+        <title>기록하기 | 네잎플로거</title>
+      </Helmet>
+      <BottomBtnLayout
+        titleText="플로깅을 완료했어요✨"
+        btnText="기록하기"
+        btnClickFunc={() => {
+          setIsLoading(true);
+          handlePostClick();
+        }}
+        disabled={isLoading}
+      >
+        <CardContainer>
+          <DateWrapper>{today.toLocaleDateString()}</DateWrapper>
+          쓰레기 사진을 찍어 플로깅을 인증하세요.
+          <ImgAddBox $imgUrl={imgUrl}>
+            {imgUrl === "" && <ImgAddIcon src={addIcon} />}
+            <input type="file" hidden accept="image/*" capture="environment" onChange={handleImgChange} />
+          </ImgAddBox>
+          <ResultWrapper>
+            <ScoreBox category="시간" value={calcTime(time)} />
+            <ScoreBox category="km" value={km.toFixed(4)} />
+          </ResultWrapper>
+          <Button
+            onClick={() => {
+              setIsLoading(true);
+              handleVerifyClick();
+            }}
+            disabled={isVerify || isLoading || !imgUrl}
+            $disabled={isVerify || isLoading || !imgUrl}
+          >
+            {isLoading ? "인증하는 중.." : isVerify ? "인증완료" : "인증하기"}
+          </Button>
+          플로깅 인증을 하지 않으면, 클로버를 받을 수 없어요.
+        </CardContainer>
+      </BottomBtnLayout>
+    </>
   );
 }
 
