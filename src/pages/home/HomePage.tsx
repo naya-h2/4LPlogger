@@ -74,6 +74,7 @@ function HomePage() {
         <br />
         플로깅에 참여해보세요! 우리의 작은 실천이 지구를 깨끗하게 만듭니다.
       </PloggingArticle>
+      <Spacer />
       <BottomNav />
     </Container>
   );
@@ -87,6 +88,10 @@ const Container = styled.div`
   flex-direction: column;
   gap: 24px;
   padding: 16px;
+`;
+
+const Spacer = styled.div`
+  height: 80px; /* 80px spacer div */
 `;
 
 const TitleText = styled.div<{ second?: boolean }>`
