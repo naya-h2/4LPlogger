@@ -27,7 +27,7 @@ function ScorePage() {
             <ScoreBox category="km" value={`${km.toFixed(4)}`} />
           </ResultWrapper>
           <CloverIcon src={runCloverIcon} />
-          <ProgressBar ratio={(km / goal) * 100} />
+          <ProgressBar ratio={Math.min((km / goal) * 100, 100)} />
           <ScoreWrapper>{`${score} 점`}</ScoreWrapper>
         </Card>
         {isOpen && <CloverModal hideModal={handleModalClose} cloverCount={Number(clover)} />}
