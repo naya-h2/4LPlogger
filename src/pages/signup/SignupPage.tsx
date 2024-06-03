@@ -28,10 +28,12 @@ function SignupPage() {
     try {
       await authCtx.signup(email, password, nickname);
 
-      navigate("/login");
+      if (authCtx.isSuccess) {
+        navigate("/", { replace: true });
+      }
     } catch (error) {
-      console.error("에러 발생:", error);
-      alert("회원 가입 중 에러가 발생했습니다. 다시 시도해주세요.");
+      // console.error("가입 오류:", error);
+      // 오류 처리 로직 추가
     }
     setIsLoading(false); // 로딩 종료
   };
