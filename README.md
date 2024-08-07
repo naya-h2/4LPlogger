@@ -29,7 +29,7 @@
 <table>
   <tbody>
     <tr>
-      <td align="center"><td align="center"><a href="https://github.com/naya-h2">
+      <td align="center"><a href="https://github.com/naya-h2">
       <img width=140px src="https://avatars.githubusercontent.com/u/103186362?v=4" alt=""/><br />
       <sub><b>안희원</b></sub></a><br /><sub>Plogging, Calendar 관련</sub></td>
       <td align="center"><a href="https://github.com/ekj1003">
